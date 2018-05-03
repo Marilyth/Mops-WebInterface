@@ -13,13 +13,13 @@
   <body>
 
         <table border="1" id="parameters">
-                <tr>
-                  <th>Parameter Name</th>>
-                  <th>Parameter Value</th>>
-                </tr>>
-              </table>
-              <script src="./test.js"></script>
-              <script>setParameterTable();</script>
+        </table>
+        <script src="./Authentification.js"></script>
+        <script>
+            getToken();
+        </script>
+        <button type="button" onclick="refreshToken()"> Refresh </button>
+        <button type="button" onclick="getUser()"> Fetch User Information </button>
 
   </body>
 
