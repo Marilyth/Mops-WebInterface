@@ -80,8 +80,7 @@ function getGuilds(){
         var table = '<table>';
         guilds.forEach(function(guild){
             table += `<tr style="display: block; float: left">
-                      <td style="display: block"><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png"></td>
-                      <td style="display: block">${guild["name"]}</td></tr>`
+                      <td style="display: block"><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" style="width: 25%; height: 25%"></tr>`
         });
         table += "</table>"
         document.getElementById("guilds").innerHTML = table;
