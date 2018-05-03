@@ -57,16 +57,7 @@ function getUser(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        document.body.innerHTML = `<table border="1" id="parameters">
-        </table>
-        <script src="./Authentification.js"></script>
-        <script>
-            getToken();
-        </script>
-        <button type="button" onclick="refreshToken()"> Refresh </button>
-        <button type="button" onclick="getUser()"> Fetch User Information </button>
-        <button type="button" onclick="getGuilds()"> Fetch Users Guilds </button>
-        <p><\p>${JSON.stringify(request.responseText, null, "\t")}`;
+        document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
@@ -82,16 +73,7 @@ function getGuilds(){
         var dict = (JSON.parse(request.responseText).map(function(x){
             return {GuildName: x["name"]}
         }));
-        document.body.innerHTML = `<table border="1" id="parameters">
-        </table>
-        <script src="./Authentification.js"></script>
-        <script>
-            getToken();
-        </script>
-        <button type="button" onclick="refreshToken()"> Refresh </button>
-        <button type="button" onclick="getUser()"> Fetch User Information </button>
-        <button type="button" onclick="getGuilds()"> Fetch Users Guilds </button>
-        <p><\p>${JSON.stringify(dict, null, "\t")}`;
+        document.getElementById("response").innerHTML = JSON.stringify(dict, null, "\t");
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
