@@ -3,6 +3,7 @@ var CLIENT_ID = "305398845389406209";
 var CLIENT_SECRET = "bPQW1eyzOgD7NOwHWH0earXroK__rj_T";
 var REDIRECT_URI = "http://5.45.104.29/Mops-WebInterface/redirect.html";
 var TokenInformation = {};
+var refreshFunction = "";
 
 function showToken() {
     var table = document.getElementById("parameters");
@@ -28,6 +29,7 @@ function getToken(code) {
 
     request.onreadystatechange = function () {
         TokenInformation = JSON.parse(request.responseText);
+        refreshFunction = setInterval(refreshToken, TokenInformation["expires_in"]);
         showToken();
     }
 
@@ -59,5 +61,6 @@ function getUser(){
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
-    request.setRequestHeader("Authorizan", `Bearer ${TokenInformation["access_token"]}`);
+    request.setRequestHeader("Authorization", `Bearer ${TokenInformation["access_token"]}`);
+    request.setRequestHeader("Content-Type", "application/json");
 }
