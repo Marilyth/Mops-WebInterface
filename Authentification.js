@@ -1,5 +1,3 @@
-import React from 'react';
-
 var APIENDPOINT = "https://discordapp.com/api/v6";
 var CLIENT_ID = "305398845389406209";
 var CLIENT_SECRET = "bPQW1eyzOgD7NOwHWH0earXroK__rj_T";
