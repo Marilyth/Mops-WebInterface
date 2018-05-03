@@ -9,7 +9,7 @@ function redirect() {
     window.location.replace(`https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=guilds%20identify&response_type=code&redirect_uri=${REDIRECT_URI}`);
 }
 
-function getToken(code) {
+function getToken() {
     var code = window.location.search.substring(1).split("=")[1];
     var request = new XMLHttpRequest();
 
@@ -17,6 +17,8 @@ function getToken(code) {
         console.log(request.responseText);
         TokenInformation = JSON.parse(request.responseText);
         refreshFunction = setInterval(refreshToken, TokenInformation["expires_in"]*1000);
+        getUser();
+        getGuilds();
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
