@@ -69,7 +69,7 @@ function getGuilds(){
         guilds.forEach(function(guild){
             table += `<tr style="display: block; float: left">
                         <td style="display: block"> 
-                            <button onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')"><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" style="width: 25%; height: 25%"></button>
+                            <img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')" style="width: 25%; height: 25%">
                         </td>
                       </tr>`;
         });
