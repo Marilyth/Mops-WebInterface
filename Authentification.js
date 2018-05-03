@@ -78,7 +78,7 @@ function getGuilds(){
         var dict = (JSON.parse(request.responseText).map(function(x){
             return {GuildName: x["name"]}
         }));
-        document.getElementById("response").innerHTML = JSON.stringify(dict, null, "\t");
+        document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
