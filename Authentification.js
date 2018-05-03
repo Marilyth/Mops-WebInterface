@@ -70,11 +70,11 @@ function getGuilds(){
         var count = columns;
         guilds.forEach(function(guild){
             count++;
-            if(count >= table) table += `<tr>`
+            if(count >= columns) table += `<tr>`
             table += `<td> 
                         <img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')" style="width: 25%; height: 25%" title="${guild["name"]}">
                       </td>`;
-            if(count >= table){
+            if(count >= columns){
                 table += `</tr>`
                 count = 0;
             }
