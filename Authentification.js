@@ -79,7 +79,9 @@ function getGuilds(){
         var guilds = (JSON.parse(request.responseText));
         var table = '<table>';
         guilds.forEach(function(guild){
-            table += `<tr><td><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png"></td><td>${guild["name"]}</td></tr>`
+            table += `<tr style="display: block; float: left">
+                      <td style="display: block"><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png"></td>
+                      <td style="display: block">${guild["name"]}</td></tr>`
         });
         table += "</table>"
         document.getElementById("guilds").innerHTML = table;
