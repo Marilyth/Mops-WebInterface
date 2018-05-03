@@ -66,12 +66,18 @@ function getGuilds(){
         console.log(request.responseText);
         var guilds = (JSON.parse(request.responseText));
         var table = '<table>';
+        var columns = Math.floor(Math.sqrt(guilds.length));
+        var count = columns;
         guilds.forEach(function(guild){
-            table += `<tr style="display: block; float: left">
-                        <td style="display: block"> 
-                            <img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')" style="width: 25%; height: 25%" title="${guild["name"]}">
-                        </td>
-                      </tr>`;
+            count++;
+            if(count >= table) table += `<tr>`
+            table += `<td> 
+                        <img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')" style="width: 25%; height: 25%" title="${guild["name"]}">
+                      </td>`;
+            if(count >= table){
+                table += `</tr>`
+                count = 0;
+            }
         });
         table += "</table>"
         document.getElementById("guilds").innerHTML = table;

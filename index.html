@@ -9,9 +9,12 @@
   </head>
 
   <body>
+      <table class="transTable" id="test" border="1" id="parameters">
+        </table>
     <script src="./Authentification.js"></script>
     <div style="text-align: center; margin-top: 20%">
       <button class="discordButton" type="button" onclick="redirect()"> Authentificate </button>
+      <button class="discordButton" type="button" onclick="document.getElementById('test').insertRow(-1).insertCell(0) = 'test'"> Test Table </button>
     </div>>
   </body>
 
