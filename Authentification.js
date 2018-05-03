@@ -5,7 +5,7 @@ var REDIRECT_URI = "http://5.45.104.29/Mops-WebInterface/redirect.html";
 var TokenInformation = {};
 var refreshFunction = "";
 
-function showToken() {
+function showDict(toBuild) {
     var table = document.getElementById("parameters");
     while(table.hasChildNodes())
     {
@@ -30,7 +30,7 @@ function getToken(code) {
     request.onreadystatechange = function () {
         TokenInformation = JSON.parse(request.responseText);
         refreshFunction = setInterval(refreshToken, TokenInformation["expires_in"]);
-        showToken();
+        showDict(TokenInformation);
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
@@ -44,7 +44,7 @@ function refreshToken() {
 
     request.onreadystatechange = function () {
         TokenInformation = JSON.parse(request.responseText);
-        showToken();
+        showDict(TokenInformation);
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
@@ -57,10 +57,26 @@ function getUser(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        console.log(request.responseText);
+        showJson(JSON.parse(request.responseText));
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
     request.setRequestHeader("Authorization", `Bearer ${TokenInformation["access_token"]}`);
     request.setRequestHeader("Content-Type", "application/json");
+    request.send();
+}
+
+function getGuilds(){
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        showDict(JSON.parse(request.responseText).map(function(x){
+            return {GuildName: x["name"]}
+        }));
+    }
+
+    request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
+    request.setRequestHeader("Authorization", `Bearer ${TokenInformation["access_token"]}`);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send();
 }
