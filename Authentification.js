@@ -48,7 +48,7 @@ function getUser(){
         console.log(request.responseText);
         var userInformation = JSON.parse(request.responseText);
         document.getElementById("user").innerHTML = `<table><tr>
-        <td><img src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
+        <td><img class="roundSquare" src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
         <td><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
         </tr></table>`
     }

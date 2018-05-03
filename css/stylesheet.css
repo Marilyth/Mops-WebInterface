@@ -5,6 +5,16 @@ button {background-color: #7289DA; border: none; border-radius: 4px; color:white
     width: 150px;
     height: 150px;
 }
+
+.roundSquare {
+    display: block;
+    border-radius: 50%;
+    transition: border-radius 0.2s ease
+}
+.roundSquare:hover{
+    border-radius: 20%;
+  }
+
 .zoomBox {
     display: block;
     border-radius: 20%;
