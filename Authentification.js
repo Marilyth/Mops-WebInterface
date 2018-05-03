@@ -65,7 +65,7 @@ function getGuilds(){
     request.onreadystatechange = function () {
         console.log(request.responseText);
         var guilds = (JSON.parse(request.responseText));
-        var table = '<table>';
+        var table = '<table style="border-collapse: separate; border-spacing: 1em 1em">';
         var columns = Math.floor(Math.sqrt(guilds.length));
         var count = 0;
         guilds.forEach(function(guild){
