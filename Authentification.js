@@ -5,20 +5,6 @@ var REDIRECT_URI = "http://5.45.104.29/Mops-WebInterface/redirect.html";
 var TokenInformation = {};
 var refreshFunction = "";
 
-function showDict(toBuild) {
-    var table = document.getElementById("parameters");
-    while(table.hasChildNodes())
-    {
-        table.removeChild(table.firstChild);
-    }
-
-    for (const [key, value] of Object.entries(TokenInformation)) {
-        row = table.insertRow(-1);
-        row.insertCell(0).innerHTML = key;
-        row.insertCell(1).innerHTML = value;
-    }
-}
-
 function redirect() {
     window.location.replace(`https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=guilds%20identify&response_type=code&redirect_uri=${REDIRECT_URI}`);
 }
@@ -28,9 +14,9 @@ function getToken(code) {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
+        console.log(request.responseText);
         TokenInformation = JSON.parse(request.responseText);
-        refreshFunction = setInterval(refreshToken, TokenInformation["expires_in"]);
-        showDict(TokenInformation);
+        refreshFunction = setInterval(refreshToken, TokenInformation["expires_in"]*1000);
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
@@ -43,8 +29,8 @@ function refreshToken() {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
+        console.log(request.responseText);
         TokenInformation = JSON.parse(request.responseText);
-        showDict(TokenInformation);
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
@@ -57,8 +43,8 @@ function getUser(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
+        console.log(request.responseText);
         var userInformation = JSON.parse(request.responseText);
-        document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
         document.getElementById("user").innerHTML = `<table><tr>
         <td><img src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
         <td><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
@@ -75,7 +61,7 @@ function getGuilds(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        document.getElementById("response").innerHTML = request.responseText;
+        console.log(request.responseText);
         var guilds = (JSON.parse(request.responseText));
         var table = '<table>';
         guilds.forEach(function(guild){
