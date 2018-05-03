@@ -1,7 +1,7 @@
 var APIENDPOINT = "https://discordapp.com/api/v6";
 var CLIENT_ID = "305398845389406209";
 var CLIENT_SECRET = "bPQW1eyzOgD7NOwHWH0earXroK__rj_T";
-var REDIRECT_URI = "http://5.45.104.29/redirect.html";
+var REDIRECT_URI = "http://5.45.104.29/Mops-WebInterface/redirect.html";
 var TokenInformation = {};
 
 function showToken() {
