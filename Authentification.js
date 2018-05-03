@@ -57,7 +57,7 @@ function getUser(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        showJson(JSON.parse(request.responseText));
+        showDict(JSON.parse(request.responseText));
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
@@ -70,9 +70,11 @@ function getGuilds(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        showDict(JSON.parse(request.responseText).map(function(x){
+        var dict = (JSON.parse(request.responseText).map(function(x){
             return {GuildName: x["name"]}
         }));
+        console.log(dict);
+        showDict(dict);
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
