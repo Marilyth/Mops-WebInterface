@@ -1,3 +1,5 @@
+import React from 'react';
+
 var APIENDPOINT = "https://discordapp.com/api/v6";
 var CLIENT_ID = "305398845389406209";
 var CLIENT_SECRET = "bPQW1eyzOgD7NOwHWH0earXroK__rj_T";
@@ -57,7 +59,9 @@ function getUser(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
+        var userInformation = JSON.parse(request.responseText);
         document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
+        document.getElementById("user").innerHTML = `<img src="https://cdn.discordapp.com/avatars/${userInformation["id"]}}/${userInformation["avatar"]}.webp">`
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
