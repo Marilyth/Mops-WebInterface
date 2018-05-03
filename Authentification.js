@@ -67,18 +67,19 @@ function getGuilds(){
         var guilds = (JSON.parse(request.responseText));
         var table = '<table>';
         var columns = Math.floor(Math.sqrt(guilds.length));
-        var count = columns;
+        var count = 0;
         guilds.forEach(function(guild){
             count++;
-            if(count >= columns) table += `<tr>`
+            if(count == 1) table += `<tr>`;
             table += `<td> 
                         <img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')" style="width: 25%; height: 25%" title="${guild["name"]}">
                       </td>`;
             if(count >= columns){
-                table += `</tr>`
+                table += `</tr>`;
                 count = 0;
             }
         });
+        if(!table.endsWith("</tr>")) table += "</tr>";
         table += "</table>"
         document.getElementById("guilds").innerHTML = table;
     }
