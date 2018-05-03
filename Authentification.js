@@ -66,7 +66,7 @@ function getUser(){
         <button type="button" onclick="refreshToken()"> Refresh </button>
         <button type="button" onclick="getUser()"> Fetch User Information </button>
         <button type="button" onclick="getGuilds()"> Fetch Users Guilds </button>
-        ${JSON.parse(request.responseText)}`;
+        ${request.responseText}`;
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
@@ -91,7 +91,7 @@ function getGuilds(){
         <button type="button" onclick="refreshToken()"> Refresh </button>
         <button type="button" onclick="getUser()"> Fetch User Information </button>
         <button type="button" onclick="getGuilds()"> Fetch Users Guilds </button>
-        ${dict}`;
+        ${JSON.stringify(dict)}`;
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
