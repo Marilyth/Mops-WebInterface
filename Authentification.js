@@ -75,14 +75,12 @@ function getGuilds(){
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        var dict = (JSON.parse(request.responseText).map(function(x){
-            return {GuildName: x["name"]}
-        }));
-        document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
+        document.getElementById("response").innerHTML = request.responseText;
+        var guilds = (JSON.parse(request.responseText));
         var table = '<table border="1">';
-        for(guild in JSON.parse(request.responseText)){
+        guilds.forEach(function(guild){
             table += `<tr><td><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png"></td><td>${guild["name"]}</td></tr>`
-        }
+        });
         table += "</table>"
         document.getElementById("guilds").innerHTML = table;
     }
