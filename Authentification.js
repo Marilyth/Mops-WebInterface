@@ -79,6 +79,12 @@ function getGuilds(){
             return {GuildName: x["name"]}
         }));
         document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
+        var table = '<table border="1">';
+        for(guild in JSON.parse(request.responseText)){
+            table += `<tr><td><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png"></td><td>${guild["name"]}</td></tr>`
+        }
+        table += "</table>"
+        document.getElementById("guilds").innerHTML = table;
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
