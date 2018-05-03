@@ -77,7 +77,7 @@ function getGuilds(){
     request.onreadystatechange = function () {
         document.getElementById("response").innerHTML = request.responseText;
         var guilds = (JSON.parse(request.responseText));
-        var table = '<table border="1">';
+        var table = '<table>';
         guilds.forEach(function(guild){
             table += `<tr><td><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png"></td><td>${guild["name"]}</td></tr>`
         });
