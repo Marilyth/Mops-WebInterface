@@ -59,7 +59,10 @@ function getUser(){
     request.onreadystatechange = function () {
         var userInformation = JSON.parse(request.responseText);
         document.getElementById("response").innerHTML = JSON.stringify(request.responseText, null, "\t");
-        document.getElementById("user").innerHTML = `<img src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp">`
+        document.getElementById("user").innerHTML = `<table><tr>
+        <td><img src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
+        <td><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
+        </tr></table>`
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
