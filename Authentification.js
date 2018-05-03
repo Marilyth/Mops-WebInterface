@@ -19,7 +19,7 @@ function showToken() {
 }
 
 function redirect() {
-    window.location.replace("https://discordapp.com/oauth2/authorize?client_id=305398845389406209&scope=guilds%20identify&response_type=code&redirect_uri=http://5.45.104.29/redirect.html");
+    window.location.replace(`https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=guilds%20identify&response_type=code&redirect_uri=${REDIRECT_URI}`);
 }
 
 function getToken(code) {
