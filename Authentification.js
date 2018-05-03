@@ -68,7 +68,10 @@ function getGuilds(){
         var table = '<table>';
         guilds.forEach(function(guild){
             table += `<tr style="display: block; float: left">
-                      <td style="display: block"><img src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" style="width: 25%; height: 25%"></tr>`
+                        <td style="display: block"> 
+                            <button style="background-size: 25% 25%; background: url('https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png')" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')"></button>
+                        </td>
+                      </tr>`;
         });
         table += "</table>"
         document.getElementById("guilds").innerHTML = table;
