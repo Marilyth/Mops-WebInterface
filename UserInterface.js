@@ -35,10 +35,9 @@ function displayGuilds() {
 }
 
 function switchToGuild(guild) {
-    console.log('I was called');
     var toFadeOut = document.getElementsByClassName('zoomBox');
     Array.prototype.forEach.call(toFadeOut, x => {
-        x.style = "transformation: scale(0,0);";
+        x.style = "transform: scale(1.3, 1.3);";
     });
     var guildDisplay = document.createElement('table');
     var row = guildDisplay.insertRow(-1);
