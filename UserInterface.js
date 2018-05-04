@@ -81,11 +81,13 @@ function displayOptions(){
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Overwatch' style='width: 64px; height: 64px; opacity: 0;' src='https://i.imgur.com/0RIw2RB.png'>`;
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Youtube' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn1.iconfinder.com/data/icons/logotypes/32/youtube-256.png'>`;
 
+    moderation.insertCell(-1).innerHTML = 'Moderation';
     moderation.insertCell(-1).innerHTML = `<img class='zoomBox' title='Giveaway' style='width: 64px; height: 64px; opacity: 0;' src='http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/gift-icon.png'>`;
     moderation.insertCell(-1).innerHTML = `<img class='zoomBox' title='Poll' style='width: 64px; height: 64px; opacity: 0;' src='http://www.myiconfinder.com/uploads/iconsets/256-256-08f7586f151e4761d26cb03276ac9b71.png'>`;
 
+    information.insertCell(-1).innerHTML = 'Information';
     information.insertCell(-1).innerHTML = `<img class='zoomBox' title='Daily Statistics' style='width: 64px; height: 64px; opacity: 0;' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp3PlZqozTISJOWTmsFGpVQxUoCt136-5cEJJZ3W3jb13-PsjP8Q'>`;
-    information.insertCell(-1).innerHTML = `<img class='zoomBox' title='Ranking' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/competition-success/512/pedestal_competitive_trophy_medal_winning_popularity_glory_high_awards_winners_badge_hero_victory_hit_proud_honor_leadership_competition_prize_premium_-512.png'>`;
+    information.insertCell(-1).innerHTML = `<img class='zoomBox' title='Ranking' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn.iconscout.com/public/images/icon/premium/png-512/leaderboards-medal-rostrum-podium-prize-stage-winner-31bf126e52798c58-512x512.png'>`;
 
     display.appendChild(table);
 
