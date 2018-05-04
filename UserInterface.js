@@ -17,7 +17,7 @@ function displayGuilds() {
     var curRow = table.insertRow(-1);
     var count = 0;
     guilds.forEach(function (guild) {
-    curRow.insertCell(-1).innerHTML = `<img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="switchToGuild(${guild})" style="width: 50%; height: 50%" title="${guild["name"]}">`;
+    curRow.insertCell(-1).innerHTML = `<img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="console.log('test')" style="width: 50%; height: 50%" title="${guild["name"]}">`;
         count++;
         if (count >= columns) {
             curRow = table.insertRow(-1);
