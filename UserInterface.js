@@ -49,7 +49,7 @@ function switchToGuild(guild) {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; transform: scale(0, 0);";
     });
     
-    toFadeOut.style = "width: 128px; height: 128px; transition: all 0.3s ease; opacity: 0;";
+    toFadeOut.style = "transition: all 0.3s ease; opacity: 0;";
     toFadeOut.title = guild['name'];
 
     window.setTimeout(function () {
@@ -70,11 +70,12 @@ function displayOptions(){
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
     var trackers = table.insertRow(-1);
     trackers.insertCell(-1).innerHTML = 'Manage Trackers';
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='https://www.redditstatic.com/icon.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='https://i.imgur.com/0RIw2RB.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' value='Twitch' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' value='Twitter' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' value='Reddit' style='width: 64px; height: 64px; opacity: 0;' src='https://www.redditstatic.com/icon.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' value='Osu' style='width: 64px; height: 64px; opacity: 0;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' value='Overwatch' style='width: 64px; height: 64px; opacity: 0;' src='https://i.imgur.com/0RIw2RB.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' value='Youtube' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn1.iconfinder.com/data/icons/logotypes/32/youtube-256.png'>`;
 
     display.appendChild(table);
 
