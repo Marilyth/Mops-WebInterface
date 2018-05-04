@@ -62,11 +62,12 @@ function getUser() {
             sessionStorage.setItem('user', request.responseText);
             console.log(request.responseText);
         } else {
-            sessionStorage.removeItem('TokenInformation');
-            redirect();
+            //sessionStorage.removeItem('TokenInformation');
+            //redirect();
         }
     }
 
+    console.log(JSON.stringify(sessionStorage.getItem('TokenInformation')));
     request.open("GET", `${sessionStorage.getItem('APIENDPOINT')}/users/@me`, false);
     request.setRequestHeader("Authorization", `Bearer ${JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]}`);
     request.setRequestHeader("Content-Type", "application/json");
@@ -81,8 +82,8 @@ function getGuilds() {
             sessionStorage.setItem('guilds', request.responseText);
             console.log(request.responseText);
         } else {
-            sessionStorage.removeItem('TokenInformation');
-            redirect();
+            //sessionStorage.removeItem('TokenInformation');
+            //redirect();
         }
     }
 
