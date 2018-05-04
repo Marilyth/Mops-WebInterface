@@ -76,6 +76,8 @@ function displayOptions(){
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='https://i.imgur.com/0RIw2RB.png'>`;
 
+    display.appendChild(table);
+
     var toPopOut = document.querySelectorAll('.zoomBox');
     window.setTimeout(Array.prototype.forEach.call(toPopIn, x => {
         x.style = "width: 0px; height: 0px; transition: all 0.3s ease; width: 64px; height: 64px;";
