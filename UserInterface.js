@@ -48,22 +48,20 @@ function switchToGuild(guild) {
     var guildDisplay = document.createElement('table');
     var row = guildDisplay.insertRow(-1);
     var image = document.createElement('img');
-        image.title = guild["name"];
-        image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
-        image.className = "roundSquare";
-        image.width = 0;
-        image.height = 0;
+    image.title = guild["name"];
+    image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
+    image.className = "roundSquare";
+    image.width = 0;
+    image.height = 0;
 
     row.insertCell(-1).appendChild(image);
 
-    var icon = document.getElementById('topIcon');
-    while (icon.hasChildNodes()) {
-        icon.removeChild(icon.lastChild);
-    }
-
     document.getElementById('topIcon').appendChild(guildDisplay);
-    window.setTimeout(function(){
+    window.setTimeout(function () {
+        var icon = document.getElementById('topIcon');
+        while (icon.hasChildNodes()) {
+            icon.removeChild(icon.lastChild);
+        }
         image.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
-        console.log("I was called");
-    }, 1000);
+    }, 300);
 }
