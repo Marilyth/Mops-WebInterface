@@ -52,5 +52,6 @@ function switchToGuild(guild) {
         image.className = "roundSquare";
     row.insertCell(-1).appendChild(image);
     document.getElementById('topIcon').appendChild(guildDisplay);
+    window.setTimeout(1000);
     image.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
 }
