@@ -3,7 +3,7 @@
 function displayUser() {
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     document.getElementById("topIcon").innerHTML = `<table><tr>
-    <td><img class="roundSquare" id="icon" src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
+    <td><img class="roundSquare" id="icon" style='width: 128px; height: 128px;' src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
     <td id="description"><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
     </tr></table>`
 }
