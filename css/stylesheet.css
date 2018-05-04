@@ -1,4 +1,21 @@
-body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #2C2F33; 
+    color: #99AAB5; 
+    font-size: 18px;
+}
+
+
 .discordButton {
     background-color: #7289DA; 
     border: none; 
