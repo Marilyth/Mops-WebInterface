@@ -45,8 +45,8 @@ function refreshToken() {
             console.log(request.responseText);
             sessionStorage.setItem('TokenInformation', request.responseText);
         } else {
-            sessionStorage.removeItem('TokenInformation');
-            redirect();
+            //sessionStorage.removeItem('TokenInformation');
+            //redirect();
         }
     }
 
