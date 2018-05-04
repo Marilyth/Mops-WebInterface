@@ -57,6 +57,7 @@ function switchToGuild(guild) {
         toFadeOut.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
         document.getElementById('description').innerHTML = `<p>Name: ${guild['name']}</p><p>ID: ${guild['id']}</p>`;
         document.getElementById('task').innerHTML = 'Please select a Task for Mops!'
+        document.getElementById('iconList').innerHTML = '';
     }, 300);
 }
 
