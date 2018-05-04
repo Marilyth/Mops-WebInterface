@@ -53,5 +53,5 @@ function switchToGuild(guild) {
         image.style = "width: 50%; heigth: 50%;";
     row.insertCell(-1).appendChild(image);
     document.getElementById('topIcon').innerHTML = guildDisplay.innerHTML;
-    image.style = "width: 50%; heigth: 50%; transition: all 0.3s ease; transform: scale(2, 2)";
+    image.style = "width: 50%; heigth: 50%; transition: all 0.3s ease; transform: scale(0, 0)";
 }
