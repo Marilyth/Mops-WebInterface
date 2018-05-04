@@ -23,7 +23,7 @@ function displayGuilds() {
         image.title = guild["name"];
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         image.className = "zoomBox";
-        
+
         curRow.insertCell(-1).appendChild(image);
         count++;
         if (count >= columns) {
@@ -38,12 +38,11 @@ function switchToGuild(guild) {
     console.log('I was called');
     var toFadeOut = document.getElementsByClassName('zoomBox');
     Array.prototype.forEach.call(toFadeOut, x => {
-        x.style = "width: 0%; height: 0%";
+        x.style = "transformation: scale(0,0);";
     });
-    var changeTopIcon = document.getElementById('topIcon');
-    changeTopIcon.innerHTML = "";
     var guildDisplay = document.createElement('table');
     var row = guildDisplay.insertRow(-1);
     row.insertCell(-1).innerHTML = `<img class="roundSquare" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png">`;
     row.insertCell(-1).innerHTML = `<p>Name: ${guild["name"]}</p><p>ID: ${guild["id"]}</p>`;
+    document.getElementById('topIcon').innerHTML = guildDisplay.innerHTML;
 }
