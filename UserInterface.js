@@ -50,8 +50,8 @@ function switchToGuild(guild) {
         image.title = guild["name"];
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         image.className = "roundSquare";
-        image.style = "width: 0%; heigth: 0%;";
+        image.style = "width: 50%; heigth: 50%;";
     row.insertCell(-1).appendChild(image);
     document.getElementById('topIcon').innerHTML = guildDisplay.innerHTML;
-    image.style = "width: 0%; heigth: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
+    image.style = "width: 50%; heigth: 50%; transition: all 0.3s ease; transform: scale(2, 2)";
 }
