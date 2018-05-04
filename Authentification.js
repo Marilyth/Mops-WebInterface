@@ -29,10 +29,10 @@ function getToken() {
         }
     }
 
-    request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
+    request.open("POST", `${sessionStorage.getItem('APIENDPOINT')}/oauth2/token`, false);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.send(`client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&` +
-        `redirect_uri=${REDIRECT_URI}&grant_type=authorization_code&code=${code}`);
+    request.send(`client_id=${sessionStorage.getItem('CLIENT_ID')}&client_secret=${sessionStorage.getItem('CLIENT_SECRET')}&` +
+        `redirect_uri=${sessionStorage.getItem('REDIRECT_URI')}&grant_type=authorization_code&code=${code}`);
 }
 
 function refreshToken() {
@@ -48,10 +48,10 @@ function refreshToken() {
         }
     }
 
-    request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
+    request.open("POST", `${sessionStorage.getItem('APIENDPOINT')}/oauth2/token`, false);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.send(`client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&` +
-        `redirect_uri=${REDIRECT_URI}&grant_type=refresh_token&refresh_token=${TokenInformation["refresh_token"]}`)
+    request.send(`client_id=${sessionStorage.getItem('CLIENT_ID')}&client_secret=${sessionStorage.getItem('CLIENT_SECRET')}&` +
+        `redirect_uri=${sessionStorage.getItem('REDIRECT_URI')}&grant_type=refresh_token&refresh_token=${JSON.parse(sessionStorage.getItem('TokenInformation'))["refresh_token"]}`)
 }
 
 function getUser() {
@@ -67,8 +67,8 @@ function getUser() {
         }
     }
 
-    request.open("GET", `${APIENDPOINT}/users/@me`, false);
-    request.setRequestHeader("Authorization", `Bearer ${TokenInformation["access_token"]}`);
+    request.open("GET", `${sessionStorage.getItem('APIENDPOINT')}/users/@me`, false);
+    request.setRequestHeader("Authorization", `Bearer ${JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]}`);
     request.setRequestHeader("Content-Type", "application/json");
     request.send();
 }
@@ -86,8 +86,8 @@ function getGuilds() {
         }
     }
 
-    request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
-    request.setRequestHeader("Authorization", `Bearer ${TokenInformation["access_token"]}`);
+    request.open("GET", `${sessionStorage.getItem('APIENDPOINT')}/users/@me/guilds`, false);
+    request.setRequestHeader("Authorization", `Bearer ${JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]}`);
     request.setRequestHeader("Content-Type", "application/json");
     request.send();
 }
