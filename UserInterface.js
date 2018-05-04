@@ -71,7 +71,7 @@ function displayOptions(){
 
     var trackers = table.insertRow(-1);
     var moderation = table.insertRow(-1);
-    var information = table.insertRow(-1)
+    var information = table.insertRow(-1);
 
     trackers.insertCell(-1).innerHTML = 'Manage Trackers';
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitch' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
