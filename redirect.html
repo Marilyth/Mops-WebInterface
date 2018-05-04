@@ -1,25 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 
-  <head>
+<head>
 
-    <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
-    <title>MopsBot</title>
+  <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+  <title>MopsBot</title>
 
-  </head>
+</head>
 
-  <body>
-        <table border="1" id="parameters">
-        </table>
-        <script src="./Authentification.js"></script>
-        <script src="./UserInterface.js"></script>
-        <div id="topIcon"></div>
-        <div id="iconList"></div>
-        <script>
-            getToken();
-            displayUser();
-            displayGuilds();
-        </script>
-  </body>
+<body>
+  <script src="./Authentification.js"></script>
+  <script src="./UserInterface.js"></script>
+  <button class="discordButton" onclick="displayUser(); displayGuilds();"> Back </button>
+  <div id="topIcon"></div>
+  <div id="iconList"></div>
+  <script>
+    getToken();
+    displayUser();
+    displayGuilds();
+  </script>
+</body>
 
 </html>
