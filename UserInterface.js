@@ -55,7 +55,7 @@ function switchToGuild(guild) {
     image.title = guild["name"];
     image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
     image.className = "roundSquare";
-    image.style +=  "opacity: 0;";
+    image.style =  "opacity: 0";
 
     row.insertCell(-1).appendChild(image);
 
