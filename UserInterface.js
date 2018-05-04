@@ -79,7 +79,7 @@ function displayOptions(){
     display.appendChild(table);
 
     var toPopIn = document.querySelectorAll('.zoomBox');
-    window.setTimeout(Array.prototype.forEach.call(toPopIn, x => {
+    window.setTimeout(function(){Array.prototype.forEach.call(toPopIn, x => {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
-    }), 300);
+    })}, 300);
 }
