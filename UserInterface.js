@@ -80,6 +80,7 @@ function displayOptions(){
 
     var toPopOut = document.querySelectorAll('.zoomBox');
     window.setTimeout(Array.prototype.forEach.call(toPopIn, x => {
+        console.log('I was called');
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
     }), 300);
 }
