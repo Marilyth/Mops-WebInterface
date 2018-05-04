@@ -49,7 +49,7 @@ function switchToGuild(guild) {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; transform: scale(0, 0);";
     });
     
-    toFadeOut.style = "transition: all 0.3s ease; opacity: 0;";
+    toFadeOut.style = "width: 128px; height: 128px; transition: all 0.3s ease; opacity: 0;";
     toFadeOut.title = guild['name'];
 
     window.setTimeout(function () {
@@ -69,7 +69,7 @@ function displayOptions(){
     var table = document.createElement('table');
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
     var trackers = table.insertRow(-1);
-    trackers.insertCell(-1).innerHTML = 'Trackers';
+    trackers.insertCell(-1).innerHTML = 'Manage Trackers';
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 64px; height: 64px; opacity: 0;' src='https://www.redditstatic.com/icon.png'>`;
