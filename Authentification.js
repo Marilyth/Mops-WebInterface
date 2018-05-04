@@ -24,10 +24,8 @@ function getToken() {
             getUser();
             getGuilds();
         } else {
-            console.log(request.statusText);
-            console.log(request.status);
-            //sessionStorage.removeItem('TokenInformation');
-            //redirect();
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
         }
     }
 
@@ -45,8 +43,8 @@ function refreshToken() {
             console.log(request.responseText);
             sessionStorage.setItem('TokenInformation', request.responseText);
         } else {
-            //sessionStorage.removeItem('TokenInformation');
-            //redirect();
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
         }
     }
 
