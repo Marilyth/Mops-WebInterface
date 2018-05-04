@@ -31,7 +31,7 @@ function displayGuilds() {
             count = 0;
         }
     });
-    document.getElementById("iconList").appendChild(table);
+    document.getElementById("iconList").innerHTML = table.innerHTML;
 }
 
 function switchToGuild(guild) {
