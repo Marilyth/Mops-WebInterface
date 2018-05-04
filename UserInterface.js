@@ -12,12 +12,17 @@ function displayGuilds() {
     var table = document.createElement('table');
     table.id = "guilds";
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
-    
+
     var columns = Math.floor(Math.sqrt(guilds.length));
     var curRow = table.insertRow(-1);
     var count = 0;
     guilds.forEach(function (guild) {
-    curRow.insertCell(-1).innerHTML = `<img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="console.log('test')" style="width: 50%; height: 50%" title="${guild["name"]}">`;
+        var image = document.createElement('img');
+        image.onclick = function () { console.log('test') };
+        image.style = "width: 50%; heigth: 50%;";
+        image.title = guild["name"];
+        image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
+        curRow.insertCell(-1).appendChild(image);
         count++;
         if (count >= columns) {
             curRow = table.insertRow(-1);
@@ -27,7 +32,7 @@ function displayGuilds() {
     document.getElementById("iconList").appendChild(table);
 }
 
-function switchToGuild(guild){
+function switchToGuild(guild) {
     console.log('I was called');
     var toFadeOut = document.getElementsByClassName('zoomBox');
     Array.prototype.forEach.call(toFadeOut, x => {
