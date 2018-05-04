@@ -1,56 +1,70 @@
-var APIENDPOINT = "https://discordapp.com/api/v6";
-var CLIENT_ID = "305398845389406209";
-var CLIENT_SECRET = "bPQW1eyzOgD7NOwHWH0earXroK__rj_T";
-var REDIRECT_URI = "http://5.45.104.29/Mops-WebInterface/redirect.html";
-var TokenInformation = {};
-var refreshFunction = "";
+sessionStorage.setItem('APIENDPOINT', "https://discordapp.com/api/v6");
+sessionStorage.setItem('CLIENT_ID', "305398845389406209");
+sessionStorage.setItem('CLIENT_SECRET', "bPQW1eyzOgD7NOwHWH0earXroK__rj_T");
+sessionStorage.setItem('REDIRECT_URI', "http://5.45.104.29/Mops-WebInterface/redirect.html");
 
 function redirect() {
     window.location.replace(`https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=guilds%20identify&response_type=code&redirect_uri=${REDIRECT_URI}`);
 }
 
 function getToken() {
+    if(sessionStorage.getItem('TokenInformation') !== null){
+        getUser();
+        getGuilds();
+        return;
+    }
+
     var code = window.location.search.substring(1).split("=")[1];
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        console.log(request.responseText);
-        TokenInformation = JSON.parse(request.responseText);
-        refreshFunction = setInterval(refreshToken, TokenInformation["expires_in"]*1000);
-        getUser();
-        getGuilds();
+        if (request.status >= 200 && request.status < 300) {
+            console.log(request.responseText);
+            sessionStorage.setItem('TokenInformation', request.responseText);
+            getUser();
+            getGuilds();
+        } else {
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
+        }
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send(`client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&` +
-                 `redirect_uri=${REDIRECT_URI}&grant_type=authorization_code&code=${code}`)
+        `redirect_uri=${REDIRECT_URI}&grant_type=authorization_code&code=${code}`);
 }
 
 function refreshToken() {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        console.log(request.responseText);
-        TokenInformation = JSON.parse(request.responseText);
+        if (request.status >= 200 && request.status < 300) {
+            console.log(request.responseText);
+            sessionStorage.setItem('TokenInformation', request.responseText);
+        } else {
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
+        }
     }
 
     request.open("POST", `${APIENDPOINT}/oauth2/token`, false);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send(`client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&` +
-                 `redirect_uri=${REDIRECT_URI}&grant_type=refresh_token&refresh_token=${TokenInformation["refresh_token"]}`)
+        `redirect_uri=${REDIRECT_URI}&grant_type=refresh_token&refresh_token=${TokenInformation["refresh_token"]}`)
 }
 
-function getUser(){
+function getUser() {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        console.log(request.responseText);
-        var userInformation = JSON.parse(request.responseText);
-        document.getElementById("user").innerHTML = `<table><tr>
-        <td><img class="roundSquare" src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
-        <td><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
-        </tr></table>`
+        if (request.status >= 200 && request.status < 300) {
+            sessionStorage.setItem('user', request.responseText);
+            console.log(request.responseText);
+        } else {
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
+        }
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me`, false);
@@ -59,29 +73,17 @@ function getUser(){
     request.send();
 }
 
-function getGuilds(){
+function getGuilds() {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
-        console.log(request.responseText);
-        var guilds = (JSON.parse(request.responseText));
-        var table = '<table style="border-collapse: separate; border-spacing: 1em 1em">';
-        var columns = Math.floor(Math.sqrt(guilds.length));
-        var count = 0;
-        guilds.forEach(function(guild){
-            count++;
-            if(count == 1) table += `<tr>`;
-            table += `<td> 
-                        <img class="zoomBox" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png" onclick="window.location.replace('http://5.45.104.29/Mops-WebInterface/options.html?guild=${guild["id"]}')" style="width: 50%; height: 50%" title="${guild["name"]}">
-                      </td>`;
-            if(count >= columns){
-                table += `</tr>`;
-                count = 0;
-            }
-        });
-        if(!table.endsWith("</tr>")) table += "</tr>";
-        table += "</table>"
-        document.getElementById("guilds").innerHTML = table;
+        if (request.status >= 200 && request.status < 300) {
+            sessionStorage.setItem('guilds', request.responseText);
+            console.log(request.responseText);
+        } else {
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
+        }
     }
 
     request.open("GET", `${APIENDPOINT}/users/@me/guilds`, false);
