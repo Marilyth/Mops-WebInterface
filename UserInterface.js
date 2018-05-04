@@ -30,8 +30,7 @@ function displayGuilds() {
 function switchToGuild(guild){
     var toFadeOut = document.getElementsByClassName('zoomBox');
     Array.prototype.forEach.call(toFadeOut, x => {
-        x.width = 0;
-        x.heigth = 0;
+        x.style = "width: 0%; height: 0%";
     });
     var changeTopIcon = document.getElementById('topIcon');
     changeTopIcon.innerHTML = "";
