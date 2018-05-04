@@ -18,10 +18,12 @@ function displayGuilds() {
     var count = 0;
     guilds.forEach(function (guild) {
         var image = document.createElement('img');
-        image.onclick = function () { console.log('test') };
+        image.onclick = function () { switchToGuild(guild) };
         image.style = "width: 50%; heigth: 50%;";
         image.title = guild["name"];
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
+        image.className = "zoomBox";
+        
         curRow.insertCell(-1).appendChild(image);
         count++;
         if (count >= columns) {
