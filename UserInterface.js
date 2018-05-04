@@ -58,6 +58,7 @@ function switchToGuild(guild) {
         document.getElementById('description').innerHTML = `<p>Name: ${guild['name']}</p><p>ID: ${guild['id']}</p>`;
         document.getElementById('task').innerHTML = 'Please select a Task for Mops!'
         document.getElementById('iconList').innerHTML = '';
+        displayOptions();
     }, 300);
 }
 
@@ -67,5 +68,16 @@ function displayOptions(){
 
     var table = document.createElement('table');
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
-    var trackers = table.insertRow(-1)
+    var trackers = table.insertRow(-1);
+    trackers.insertCell(-1).innerHTML = 'Trackers';
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='https://www.redditstatic.com/icon.png'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
+    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' style='width: 0px; heigth: 0px;' src='https://i.imgur.com/0RIw2RB.png'>`;
+
+    var toPopOut = document.querySelectorAll('.zoomBox');
+    window.setTimeout(Array.prototype.forEach.call(toPopIn, x => {
+        x.style = "width: 0px; height: 0px; transition: all 0.3s ease; width: 64px; height: 64px;";
+    }), 300);
 }
