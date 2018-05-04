@@ -16,7 +16,7 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
 .roundSquare {
     display: block;
     border-radius: 50%;
-    transition: border-radius 0.2s ease
+    transition: all 0.2s ease
 }
 .roundSquare:hover{
     border-radius: 20%;
