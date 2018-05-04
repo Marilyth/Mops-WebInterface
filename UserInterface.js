@@ -1,8 +1,8 @@
 function displayUser() {
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     document.getElementById("topIcon").innerHTML = `<table><tr>
-    <td><img class="roundSquare" src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
-    <td><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
+    <td><img class="roundSquare" id="icon" src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
+    <td id="description"><p>Name: ${userInformation["username"]}</p><p>Tag: ${userInformation["discriminator"]}</p><p>ID: ${userInformation["id"]}</p>
     </tr></table>`
 }
 
@@ -41,28 +41,18 @@ function displayGuilds() {
 
 function switchToGuild(guild) {
     var toPopOut = document.querySelectorAll('.zoomBox');
-    var toFadeOut = document.querySelectorAll('.roundSquare');
+    var toFadeOut = document.getElementById('icon');
     Array.prototype.forEach.call(toPopOut, x => {
         x.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
     });
     Array.prototype.forEach.call(toFadeOut, x => {
         x.style = "transition: all 0.3s ease; opacity: 0;";
+        x.title = guild['name'];
     });
-
-    var guildDisplay = document.createElement('table');
-    var row = guildDisplay.insertRow(-1);
-    var image = document.createElement('img');
-    image.title = guild["name"];
-    image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
-    image.className = "roundSquare";
-    image.style =  "opacity: 0";
-
-    row.insertCell(-1).appendChild(image);
 
     document.getElementById('topIcon').appendChild(guildDisplay);
     window.setTimeout(function () {
-        var icon = document.getElementById('topIcon');
-        icon.removeChild(icon.firstChild);
-        image.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
+        toFadeOut.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
+        toFadeOut.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
     }, 300);
 }
