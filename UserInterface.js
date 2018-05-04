@@ -40,26 +40,30 @@ function displayGuilds() {
 }
 
 function switchToGuild(guild) {
-    var toFadeOut = document.getElementsByClassName('zoomBox');
+    var toFadeOut = document.querySelectorAll('.zoomBox,.roundSquare');
     Array.prototype.forEach.call(toFadeOut, x => {
         x.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
     });
+
     var guildDisplay = document.createElement('table');
     var row = guildDisplay.insertRow(-1);
     var image = document.createElement('img');
         image.title = guild["name"];
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         image.className = "roundSquare";
+        image.width = 0;
+        image.height = 0;
+
     row.insertCell(-1).appendChild(image);
 
     var icon = document.getElementById('topIcon');
     while (icon.hasChildNodes()) {
         icon.removeChild(icon.lastChild);
     }
-    
+
     document.getElementById('topIcon').appendChild(guildDisplay);
     window.setTimeout(function(){
-        image.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
+        image.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
         console.log("I was called");
     }, 1000);
 }
