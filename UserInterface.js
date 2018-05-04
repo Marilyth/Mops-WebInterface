@@ -37,7 +37,7 @@ function displayGuilds() {
 function switchToGuild(guild) {
     var toFadeOut = document.getElementsByClassName('zoomBox');
     Array.prototype.forEach.call(toFadeOut, x => {
-        x.style = "transition: all 0.3s ease; transform: scale(0, 0);";
+        x.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
     });
     var guildDisplay = document.createElement('table');
     var row = guildDisplay.insertRow(-1);
