@@ -9,6 +9,7 @@ function displayUser() {
 }
 
 function displayGuilds() {
+    document.getElementById('task').innerHTML = 'Please select a Guild!'
     var guilds = JSON.parse(sessionStorage.getItem('guilds'));
 
     var table = document.createElement('table');
