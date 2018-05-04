@@ -51,7 +51,15 @@ function switchToGuild(guild) {
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         image.className = "roundSquare";
     row.insertCell(-1).appendChild(image);
+
+    var icon = document.getElementById('topIcon');
+    while (icon.hasChildNodes()) {
+        icon.removeChild(icon.lastChild);
+    }
+    
     document.getElementById('topIcon').appendChild(guildDisplay);
-    window.setTimeout(1000);
-    image.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
+    window.setTimeout(function(){
+        image.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
+        console.log("I was called");
+    }, 1000);
 }
