@@ -43,10 +43,10 @@ function switchToGuild(guild) {
     var toPopOut = document.querySelectorAll('.zoomBox');
     var toFadeOut = document.querySelectorAll('.roundSquare');
     Array.prototype.forEach.call(toPopOut, x => {
-        x.style += "transform: scale(0, 0);";
+        x.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
     });
     Array.prototype.forEach.call(toFadeOut, x => {
-        x.style += "opacity: 0;";
+        x.style = "transition: all 0.3s ease; opacity: 0;";
     });
 
     var guildDisplay = document.createElement('table');
@@ -63,6 +63,6 @@ function switchToGuild(guild) {
     window.setTimeout(function () {
         var icon = document.getElementById('topIcon');
         icon.removeChild(icon.firstChild);
-        image.style = "transition: all 0.3s ease; width: 128px; height: 128px; opacity: 1;";
+        image.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
     }, 300);
 }
