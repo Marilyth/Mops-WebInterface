@@ -32,7 +32,8 @@ function displayGuilds() {
         }
     });
 
-    document.getElementById("iconList").removeChild(document.getElementById("iconList").lastChild);
+    if(document.getElementById("iconList").hasChildNodes)
+        document.getElementById("iconList").removeChild(document.getElementById("iconList").lastChild);
     document.getElementById("iconList").appendChild(table);
 }
 
