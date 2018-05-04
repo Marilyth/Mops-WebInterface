@@ -45,12 +45,10 @@ function switchToGuild(guild) {
     Array.prototype.forEach.call(toPopOut, x => {
         x.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
     });
-    Array.prototype.forEach.call(toFadeOut, x => {
-        x.style = "transition: all 0.3s ease; opacity: 0;";
-        x.title = guild['name'];
-    });
+    
+    toFadeOut.style = "transition: all 0.3s ease; opacity: 0;";
+    toFadeOut.title = guild['name'];
 
-    document.getElementById('topIcon').appendChild(guildDisplay);
     window.setTimeout(function () {
         toFadeOut.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         toFadeOut.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
