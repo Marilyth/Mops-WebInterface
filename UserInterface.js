@@ -1,3 +1,5 @@
+
+
 function displayUser() {
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     document.getElementById("topIcon").innerHTML = `<table><tr>
@@ -19,7 +21,7 @@ function displayGuilds() {
     guilds.forEach(function (guild) {
         var image = document.createElement('img');
         image.onclick = function () { switchToGuild(guild) };
-        image.style = "width: 50%; heigth: 50%;";
+        image.style = "width: 64px; heigth: 64px;";
         image.title = guild["name"];
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         image.className = "zoomBox";
@@ -43,7 +45,7 @@ function switchToGuild(guild) {
     var toPopOut = document.querySelectorAll('.zoomBox');
     var toFadeOut = document.getElementById('icon');
     Array.prototype.forEach.call(toPopOut, x => {
-        x.style = "width: 50%; height: 50%; transition: all 0.3s ease; transform: scale(0, 0);";
+        x.style = "width: 64px; height: 64px; transition: all 0.3s ease; transform: scale(0, 0);";
     });
     
     toFadeOut.style = "transition: all 0.3s ease; opacity: 0;";
@@ -53,5 +55,15 @@ function switchToGuild(guild) {
         toFadeOut.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         toFadeOut.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
         document.getElementById('description').innerHTML = `<p>Name: ${guild['name']}</p><p>ID: ${guild['id']}</p>`;
+        document.getElementById('task').innerHTML = 'Please select a Task for Mops!'
     }, 300);
+}
+
+function displayOptions(){
+    var display = document.getElementById('iconList');
+    display.innerHTML = "";
+
+    var table = document.createElement('table');
+    table.style = "border-collapse: separate; border-spacing: 1em 1em";
+    var trackers = table.insertRow(-1)
 }
