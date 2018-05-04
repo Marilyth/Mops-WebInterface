@@ -80,6 +80,6 @@ function displayOptions(){
 
     var toPopIn = document.querySelectorAll('.zoomBox');
     window.setTimeout(function(){Array.prototype.forEach.call(toPopIn, x => {
-        x.style = "width: 64px; height: 64px; transition: width height opacity 0.3s ease; opacity: 1;";
+        x.style = "width: 1px; height: 1px; transition: width height 0.3s ease; opacity: 1; transform: scale(64,64)";
     })}, 300);
 }
