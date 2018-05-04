@@ -28,6 +28,7 @@ function displayGuilds() {
 }
 
 function switchToGuild(guild){
+    console.log('I was called');
     var toFadeOut = document.getElementsByClassName('zoomBox');
     Array.prototype.forEach.call(toFadeOut, x => {
         x.style = "width: 0%; height: 0%";
@@ -39,6 +40,3 @@ function switchToGuild(guild){
     row.insertCell(-1).innerHTML = `<img class="roundSquare" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png">`;
     row.insertCell(-1).innerHTML = `<p>Name: ${guild["name"]}</p><p>ID: ${guild["id"]}</p>`;
 }
-Array.prototype.forEach.call(parent.children, child => {
-    console.log(child)
-  });
