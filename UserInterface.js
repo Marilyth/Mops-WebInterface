@@ -59,8 +59,8 @@ function switchToGuild(guild) {
     document.getElementById('topIcon').appendChild(guildDisplay);
     window.setTimeout(function () {
         var icon = document.getElementById('topIcon');
-        while (icon.hasChildNodes()) {
-            icon.removeChild(icon.lastChild);
+        while (icon.childNodes > 1) {
+            icon.removeChild(icon.firstChild);
         }
         image.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
     }, 300);
