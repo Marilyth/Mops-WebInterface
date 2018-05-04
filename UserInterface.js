@@ -46,7 +46,12 @@ function switchToGuild(guild) {
     });
     var guildDisplay = document.createElement('table');
     var row = guildDisplay.insertRow(-1);
-    row.insertCell(-1).innerHTML = `<img class="roundSquare" style="width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px" src="https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png">`;
-    row.insertCell(-1).innerHTML = `<p>Name: ${guild["name"]}</p><p>ID: ${guild["id"]}</p>`;
+    var image = document.createElement('img');
+        image.title = guild["name"];
+        image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
+        image.className = "roundSquare";
+        image.style = "width: 0%; heigth: 0%;";
+    row.insertCell(-1).appendChild(image);
     document.getElementById('topIcon').innerHTML = guildDisplay.innerHTML;
+    image.style = "width: 0%; heigth: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
 }
