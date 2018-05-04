@@ -52,5 +52,6 @@ function switchToGuild(guild) {
     window.setTimeout(function () {
         toFadeOut.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         toFadeOut.style = "width: 0%; height: 0%; transition: all 0.3s ease; width: 128px; height: 128px;";
+        document.getElementById('description').innerHTML = `<p>Name: ${guild['name']}</p><p>ID: ${guild['id']}</p>`;
     }, 300);
 }
