@@ -78,8 +78,8 @@ function displayOptions(){
 
     display.appendChild(table);
 
-    var toPopIn = document.querySelectorAll('.zoomBox');
-    window.setTimeout(function(){Array.prototype.forEach.call(toPopIn, x => {
-        x.style = "width: 1%; height: 1%; transition: all 0.3s ease; opacity: 1; transform: scale(20,20)";
+    var toFadeIn = document.querySelectorAll('.zoomBox');
+    window.setTimeout(function(){Array.prototype.forEach.call(toFadeIn, x => {
+        x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
     })}, 300);
 }
