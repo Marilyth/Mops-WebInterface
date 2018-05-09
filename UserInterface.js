@@ -1,65 +1,51 @@
-
+var lastGuild = null;
 
 function displayUser() {
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
-    document.getElementById("topIcon").innerHTML = `<table><tr>
-    <td><img class="roundSquare" id="icon" style='width: 128px; height: 128px;' src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp"></td>
-    <td id="description"><p>Name: ${userInformation["username"]}#${userInformation['discriminator']}</p><p>ID: ${userInformation["id"]}</p>
-    </tr></table>`
+    document.getElementById("topIcon").innerHTML = `<img class="roundSquare" id="icon" style='width: 50px; height: 50px;' src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp">`;
+    document.getElementById('username').innerHTML = userInformation['username'];
 }
 
 function displayGuilds() {
-    document.getElementById('task').innerHTML = 'Please select a Guild!'
     var guilds = JSON.parse(sessionStorage.getItem('guilds'));
 
     var table = document.createElement('table');
     table.id = "guilds";
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
 
-    var columns = Math.floor(Math.sqrt(guilds.length));
-    var curRow = table.insertRow(-1);
-    var count = 0;
     guilds.forEach(function (guild) {
         var image = document.createElement('img');
         image.onclick = function () { switchToGuild(guild) };
         image.style = "width: 64px; heigth: 64px;";
         image.title = guild["name"];
         image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
-        image.className = "zoomBox";
+        image.className = "roundSquare";
+        image.id = `image:${guild['id']}`;
 
-        curRow.insertCell(-1).appendChild(image);
-        count++;
-        if (count >= columns) {
-            curRow = table.insertRow(-1);
-            count = 0;
-        }
+        var cell = table.insertRow(-1).insertCell(-1);
+        cell.appendChild(image);
+        cell.id = `cell:${guild['id']}`;
     });
 
-    var list = document.getElementById('iconList');
+    var list = document.getElementById('serverList');
     while (list.hasChildNodes()) {
         list.removeChild(list.lastChild);
     }
-    document.getElementById("iconList").appendChild(table);
+    document.getElementById("serverList").appendChild(table);
 }
 
 function switchToGuild(guild) {
-    var toPopOut = document.querySelectorAll('.zoomBox');
-    var toFadeOut = document.getElementById('icon');
-    Array.prototype.forEach.call(toPopOut, x => {
-        x.style = "width: 64px; height: 64px; transition: all 0.3s ease; transform: scale(0, 0);";
-    });
-    
-    toFadeOut.style = "transition: all 0.3s ease; opacity: 0;";
-    toFadeOut.title = guild['name'];
+    if(lastGuild !== null){
+        var toReverse = document.getElementById(`image:${lastGuild['id']}`);
+        toReverse.className = "roundSquare";
+        toReverse.style = "width: 64px; height: 64px; border-radius: 50%; transform: scale(1, 1);";
+    }
 
-    window.setTimeout(function () {
-        toFadeOut.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
-        toFadeOut.style = "width: 128px; height: 128px; transition: all 0.3s ease; opacity: 1;";
-        document.getElementById('description').innerHTML = `<p>Name: ${guild['name']}</p><p>ID: ${guild['id']}</p>`;
-        document.getElementById('task').innerHTML = 'Please select a Task for Mops!'
-        document.getElementById('iconList').innerHTML = '';
-        displayOptions();
-    }, 300);
+    var chosen = document.getElementById(`image:${guild['id']}`);
+    chosen.style = 'width: 64px; height: 64px; border-radius: 20%; transform: scale(1.3, 1.3);'
+    chosen.className = "selected-image";
+    lastGuild = guild;
+    displayOptions();
 }
 
 function displayOptions(){

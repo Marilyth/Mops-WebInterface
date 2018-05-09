@@ -9,17 +9,43 @@
 </head>
 
 <body>
-  <script src="./Authentification.js"></script>
-  <script src="./UserInterface.js"></script>
-  <button class="discordButton" onclick="displayUser(); displayGuilds();"> Back </button>
-  <div id="topIcon"></div>
-  <p><p><h1 id='task'></h1></p></p>
-  <div id="iconList"></div>
+  <div class='topContainer'>
+    <table style='float:right;'>
+      <tr>
+        <td>
+            <div id="topIcon"></div>
+        </td>
+        <td>
+            <div id="username"></div>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <div class="centralContainer">
+
+    <script src="./Authentification.js"></script>
+    <script src="./UserInterface.js"></script>
+
+    <table id='containerTable' style="border-collapse: collapse">
+      <tr>
+        <td>
+          <div id='serverList' class='scroll-content' style='background-color: rgb(32, 34, 37)'></div>
+        </td>
+        <td>
+          <div id="iconList"></div>
+        </td>
+      </tr>
+    </table>
+
+  </div>
   <script>
     getToken();
     displayUser();
     displayGuilds();
   </script>
+  </div>
 </body>
 
 </html>
