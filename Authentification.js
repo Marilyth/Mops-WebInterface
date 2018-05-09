@@ -13,6 +13,10 @@ function getToken() {
         getGuilds();
         return;
     }
+    else{
+        sessionStorage.removeItem('TokenInformation');
+        redirect();
+    }
 
     var code = window.location.search.substring(1).split("=")[1];
     var request = new XMLHttpRequest();
