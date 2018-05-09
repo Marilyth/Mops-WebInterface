@@ -17,7 +17,7 @@ function getToken() {
     var code = window.location.search.substring(1).split("=")[1];
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function () {
+    request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             console.log(request.responseText);
             sessionStorage.setItem('TokenInformation', request.responseText);
@@ -38,7 +38,7 @@ function getToken() {
 function refreshToken() {
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function () {
+    request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             console.log(request.responseText);
             sessionStorage.setItem('TokenInformation', request.responseText);
@@ -57,7 +57,7 @@ function refreshToken() {
 function getUser() {
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function () {
+    request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             sessionStorage.setItem('user', request.responseText);
             console.log(request.responseText);
@@ -77,7 +77,7 @@ function getUser() {
 function getGuilds() {
     var request = new XMLHttpRequest();
 
-    request.onreadystatechange = function () {
+    request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             sessionStorage.setItem('guilds', request.responseText);
             console.log(request.responseText);

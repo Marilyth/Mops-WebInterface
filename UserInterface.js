@@ -14,7 +14,7 @@ function displayGuilds() {
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
     table.insertRow(-1).insertCell(-1).innerHTML = '<button class="invite-button" type="button" onclick="window.open(`https://discordapp.com/api/oauth2/authorize?client_id=305398845389406209&permissions=271707136&redirect_uri=http%3A%2F%2F5.45.104.29%3A5000%2Fapi%2Fuser&scope=bot`, `_blank`).focus();"> Invite </button>'
 
-    guilds.forEach(function (guild) {
+    guilds.forEach(guild => {
         var image = document.createElement('img');
         image.onclick = function () { switchToGuild(guild) };
         image.style = "width: 64px; heigth: 64px;";
@@ -80,7 +80,7 @@ function displayOptions(guild){
     display.appendChild(table);
 
     var toFadeIn = document.querySelectorAll('.zoomBox');
-    window.setTimeout(function(){Array.prototype.forEach.call(toFadeIn, x => {
+    window.setTimeout(() => {Array.prototype.forEach.call(toFadeIn, x => {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
     })}, 300);
 }
