@@ -15,6 +15,7 @@ function getToken() {
             return;
         }
         else{
+            console.log("No code given, and no token in storage.");
             sessionStorage.removeItem('TokenInformation');
             redirect();
         }
@@ -29,9 +30,6 @@ function getToken() {
             sessionStorage.setItem('TokenInformation', request.responseText);
             getUser();
             getGuilds();
-        } else {
-            sessionStorage.removeItem('TokenInformation');
-            redirect();
         }
     }
 
