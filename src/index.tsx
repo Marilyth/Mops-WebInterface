@@ -1,11 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import Redirect from './components/Authentification';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/App'
 
 import './components/css/stylesheet.css';
 
 ReactDOM.render(
-    <Redirect />,
+    <BrowserRouter>
+        <App loggedIn={false}/>
+    </BrowserRouter>,
     document.getElementById('root') as HTMLElement  
 );
