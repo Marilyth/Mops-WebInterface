@@ -27,11 +27,7 @@ function displayGuilds() {
         cell.appendChild(image);
         cell.id = `cell:${guild['id']}`;
     });
-
-    var list = document.getElementById('serverList');
-    while (list.hasChildNodes()) {
-        list.removeChild(list.lastChild);
-    }
+    
     document.getElementById("serverList").appendChild(table);
 }
 
