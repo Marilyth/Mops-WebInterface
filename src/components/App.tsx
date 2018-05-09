@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
+
 import {isLoggedIn} from './../utils/Authentification'
 import AuthButton from './AuthButton';
-import './css/stylesheet.css';
 import TokenReader from './TokenReader';
+
+import './css/stylesheet.css';
 
 const NoMatch = () => (
     <div>

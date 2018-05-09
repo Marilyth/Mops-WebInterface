@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
+
 import { isLoggedIn, redirect } from './../utils/Authentification'
 
 class AuthButton extends React.Component{
