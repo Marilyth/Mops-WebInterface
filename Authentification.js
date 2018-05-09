@@ -8,14 +8,16 @@ function redirect() {
 }
 
 function getToken() {
-    if(sessionStorage.getItem('TokenInformation') !== null){
-        getUser();
-        getGuilds();
-        return;
-    }
-    else{
-        sessionStorage.removeItem('TokenInformation');
-        redirect();
+    if(window.location.search.substring(1).split("=").length < 2){
+        if(sessionStorage.getItem('TokenInformation') !== null){
+            getUser();
+            getGuilds();
+            return;
+        }
+        else{
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
+        }
     }
 
     var code = window.location.search.substring(1).split("=")[1];
