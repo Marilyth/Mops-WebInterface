@@ -42,10 +42,10 @@ function switchToGuild(guild) {
     chosen.style = 'width: 64px; height: 64px; border-radius: 20%; transform: scale(1.3, 1.3);'
     chosen.className = "selected-image";
     lastGuild = guild;
-    displayOptions();
+    displayOptions(guild);
 }
 
-function displayOptions(){
+function displayOptions(guild){
     var display = document.getElementById('iconList');
     display.innerHTML = "";
 
