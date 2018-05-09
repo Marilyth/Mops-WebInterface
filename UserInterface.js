@@ -27,7 +27,7 @@ function displayGuilds() {
         cell.appendChild(image);
         cell.id = `cell:${guild['id']}`;
     });
-    
+
     document.getElementById("serverList").appendChild(table);
 }
 
@@ -56,13 +56,18 @@ function displayOptions(){
     var moderation = table.insertRow(-1);
     var information = table.insertRow(-1);
 
+    var perm = guild['permissions'].toString(2);
+    manageChannel = perm.charAt(perm.length - 5) == 1 || perm.charAt(perm.length - 4) == 1 || guild['owner'];
+
     trackers.insertCell(-1).innerHTML = 'Manage Trackers';
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitch' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitter' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Reddit' style='width: 64px; height: 64px; opacity: 0;' src='https://www.redditstatic.com/icon.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Osu' style='width: 64px; height: 64px; opacity: 0;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
     trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Overwatch' style='width: 64px; height: 64px; opacity: 0;' src='https://i.imgur.com/0RIw2RB.png'>`;
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Youtube' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn1.iconfinder.com/data/icons/logotypes/32/youtube-256.png'>`;
+    if(manageChannel){
+        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitch' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
+        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitter' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
+        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Reddit' style='width: 64px; height: 64px; opacity: 0;' src='https://www.redditstatic.com/icon.png'>`;
+        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Osu' style='width: 64px; height: 64px; opacity: 0;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
+        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Youtube' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn1.iconfinder.com/data/icons/logotypes/32/youtube-256.png'>`;
+    }
 
     moderation.insertCell(-1).innerHTML = 'Moderation';
     moderation.insertCell(-1).innerHTML = `<img class='zoomBox' title='Giveaway' style='width: 64px; height: 64px; opacity: 0;' src='http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/gift-icon.png'>`;
@@ -78,23 +83,4 @@ function displayOptions(){
     window.setTimeout(function(){Array.prototype.forEach.call(toFadeIn, x => {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
     })}, 300);
-}
-
-function getGuildChannels(guild){
-        var request = new XMLHttpRequest();
-    
-        request.onreadystatechange = function () {
-            if (request.status >= 200 && request.status < 400) {
-                sessionStorage.setItem('guilds', request.responseText);
-                console.log(request.responseText);
-            } else {
-                //sessionStorage.removeItem('TokenInformation');
-                //redirect();
-            }
-        }
-    
-        request.open("GET", `${sessionStorage.getItem('APIENDPOINT')}/users/@me/guilds`, false);
-        request.setRequestHeader("Authorization", `Bearer ${JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]}`);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.send();
 }
