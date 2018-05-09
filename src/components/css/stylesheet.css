@@ -35,13 +35,20 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
 }
 
 .roundSquare {
-    display: block;
-    border-radius: 50%;
-    transition: border-radius 0.2s ease
+    display: block !important;
+    border-radius: 50% !important;
+    transition: all 0.2s ease !important;
 }
 .roundSquare:hover{
-    border-radius: 20%;
+    border-radius: 30% !important;
+    cursor: pointer !important;
   }
+
+.selected-image {
+    display: block !important;
+    border-radius: 20% !important;
+    transition: all 0.3s ease !important;
+}
 
 .zoomBox {
     display: block;
