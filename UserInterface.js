@@ -12,6 +12,7 @@ function displayGuilds() {
     var table = document.createElement('table');
     table.id = "guilds";
     table.style = "border-collapse: separate; border-spacing: 1em 1em";
+    table.insertRow(-1).insertCell(-1).innerHTML = '<button class="invite-button" type="button" onclick="window.open(`https://discordapp.com/api/oauth2/authorize?client_id=305398845389406209&permissions=271707136&redirect_uri=http%3A%2F%2F5.45.104.29%3A5000%2Fapi%2Fuser&scope=bot`, `_blank`).focus();"> Invite </button>'
 
     guilds.forEach(function (guild) {
         var image = document.createElement('img');
@@ -81,4 +82,23 @@ function displayOptions(){
     window.setTimeout(function(){Array.prototype.forEach.call(toFadeIn, x => {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
     })}, 300);
+}
+
+function getGuildChannels(guild){
+        var request = new XMLHttpRequest();
+    
+        request.onreadystatechange = function () {
+            if (request.status >= 200 && request.status < 400) {
+                sessionStorage.setItem('guilds', request.responseText);
+                console.log(request.responseText);
+            } else {
+                //sessionStorage.removeItem('TokenInformation');
+                //redirect();
+            }
+        }
+    
+        request.open("GET", `${sessionStorage.getItem('APIENDPOINT')}/users/@me/guilds`, false);
+        request.setRequestHeader("Authorization", `Bearer ${JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]}`);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send();
 }
