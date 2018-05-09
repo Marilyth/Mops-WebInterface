@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
+import {isLoggedIn} from './../utils/Authentification'
 import AuthButton from './AuthButton';
 import './css/stylesheet.css';
 import TokenReader from './TokenReader';
@@ -10,17 +11,15 @@ const NoMatch = () => (
     </div>
 )
 
-interface IAppProps {
-    loggedIn: boolean
-}
+
 
 function test() {
     return <div>TEST</div>;
 }
 
-class App extends React.Component<IAppProps, object>{
+class App extends React.Component{
     public render() {
-        if (!this.props.loggedIn && location.pathname !== '/Auth' &&  location.pathname !== '/redirect.html') {
+        if (!isLoggedIn() && location.pathname !== '/Auth' &&  location.pathname !== '/redirect.html') {
             return <Redirect to='/Auth' />;
         }
 

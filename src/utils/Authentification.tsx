@@ -9,10 +9,17 @@ export function redirect(){
 }
 
 export function getToken() {
-    if(sessionStorage.getItem('TokenInformation') !== null){
-        getUser();
-        getGuilds();
-        return;
+    if(window.location.search.substring(1).split("=").length < 2){
+        if(sessionStorage.getItem('TokenInformation') !== null){
+            getUser();
+            getGuilds();
+            return;
+        }
+        else{
+            // console.log("No code given, and no token in storage.");
+            sessionStorage.removeItem('TokenInformation');
+            redirect();
+        }
     }
 
     const code = window.location.search.substring(1).split("=")[1];
@@ -24,11 +31,6 @@ export function getToken() {
             sessionStorage.setItem('TokenInformation', request.responseText);
             getUser();
             getGuilds();
-        } else {
-            // tslint:disable-next-line:no-console
-            console.log(request.responseText);
-            sessionStorage.removeItem('TokenInformation');
-            redirect();
         }
     }
 
@@ -36,6 +38,7 @@ export function getToken() {
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send(`client_id=${sessionStorage.getItem('CLIENT_ID')}&client_secret=${sessionStorage.getItem('CLIENT_SECRET')}&` +
         `redirect_uri=${sessionStorage.getItem('REDIRECT_URI')}&grant_type=authorization_code&code=${code}`);
+
 }
 
 export function refreshToken() {
