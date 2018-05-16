@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 
 import { isLoggedIn, redirect } from './../utils/Authentification'
 
+
 class AuthButton extends React.Component{
     
     
@@ -12,9 +13,7 @@ class AuthButton extends React.Component{
         }
 
         return (
-            <div className="redirect">
-                <button className="discordButton" type="button" onClick={redirect}> Authentificate </button>
-            </div>
+            <button className="discordButton rightAlign" type="button" onClick={redirect}> Authentificate </button>
         )
     }
 }

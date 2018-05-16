@@ -1,7 +1,7 @@
 sessionStorage.setItem('APIENDPOINT', "https://discordapp.com/api/v6");
-sessionStorage.setItem('CLIENT_ID', "305398845389406209");
-sessionStorage.setItem('CLIENT_SECRET', "bPQW1eyzOgD7NOwHWH0earXroK__rj_T");
-sessionStorage.setItem('REDIRECT_URI', location.protocol + '//' + location.host + '/redirect.html');
+sessionStorage.setItem('CLIENT_ID', "380339241860988928");
+sessionStorage.setItem('CLIENT_SECRET', "b0ojl5_z-kw2eovcWaUHeoLkAXebYEvi");
+sessionStorage.setItem('REDIRECT_URI', location.protocol + '//' + location.host + '/Redirect');
 
 export function redirect(){
 

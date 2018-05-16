@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Redirect, Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router';
 
-import {isLoggedIn} from './../utils/Authentification'
-import AuthButton from './AuthButton';
+// import {isLoggedIn} from './../utils/Authentification'
+import Login from './Login';
+// import AuthButton from './AuthButton';
 import TokenReader from './TokenReader';
 
 import './css/stylesheet.css';
@@ -19,22 +20,22 @@ function test() {
     return <div>TEST</div>;
 }
 
+function about() {
+    return <div>About</div>;
+}
+
 class App extends React.Component{
     public render() {
-        if (!isLoggedIn() && location.pathname !== '/Auth' &&  location.pathname !== '/redirect.html') {
-            return <Redirect to='/Auth' />;
-        }
-
         return (
             <div>
                 <div className='topContainer'>
-                    topContainer
+                    <Login/>
                 </div>
 
                 <Switch>
                     <Route exact={true} path='/' render={test} />
-                    <Route path='/redirect.html' component={TokenReader} />
-                    <Route path='/Auth' component={AuthButton} />
+                    <Route path='/Redirect' component={TokenReader} />
+                    <Route path='/About' component={about} />
                     <Route component={NoMatch} />
                 </Switch>
             </div>
