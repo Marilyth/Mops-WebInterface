@@ -102,3 +102,28 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
     padding: 10px;
     top: -10%;
 }
+
+.dropdown-content {
+	font-family:'Merienda', cursive;
+    display: block;
+    margin-top: 1.5%;
+    position: absolute;
+    background-color: #36393E;
+    min-width: 200px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 8px 8px 8px 8px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition:all 500ms;
+}
+
+.dropdownitem a:hover {
+    background-color: #22262b !important
+}
