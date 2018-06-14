@@ -124,6 +124,6 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
     transition:all 500ms;
 }
 
-.dropdownitem a:hover {
+.dropdown-content a:hover {
     background-color: #22262b !important
 }
