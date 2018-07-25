@@ -21,8 +21,8 @@ class Guilds extends React.Component {
 
     public tabelRow = (guild: any) => {
         return <tr>
-            <td id={guild.id}>
-                <img title={guild.name} onClick={// tslint:disable-next-line:jsx-no-lambda no-shadowed-variable
+            <td id={`image:${guild.id}`}>
+                <img title={guild.name} onClick={// tslint:disable-next-line:jsx-no-lambda
                     () => { this.switchToGuild(guild) }} className='roundSquare guildIcon' src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
                 />
             </td>
@@ -34,7 +34,7 @@ class Guilds extends React.Component {
         if (this.lastGuild != null) {
             const toReverse = document.getElementById(`image:${this.lastGuild.id}`);
             if (toReverse) {
-                toReverse.className = "roundSquare toReverseElement";
+                toReverse.className = "roundSquare";
             }
         }
         const chosen = document.getElementById(`image:${guild.id}`);

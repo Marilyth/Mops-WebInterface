@@ -159,13 +159,6 @@ body {background-color: #2C2F33;; color: #99AAB5; font-size: 18px;}
     border-collapse: separate; border-spacing: 1em 1em
 }
 
-.toReversElement {
-    width: 64px; 
-    height: 64px; 
-    border-radius: 50%; 
-    transform: scale(1, 1);
-}
-
 .chosenElement{
     width: 64px;
     height: 64px;
