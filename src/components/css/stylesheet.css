@@ -1,4 +1,4 @@
-body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
+body {background-color: #2C2F33;; color: #99AAB5; font-size: 18px;}
 
 .discordButton {
     background-color: #7289DA; 
@@ -74,6 +74,10 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
     height: 540px;
 }
 
+.serverList{
+    background-color: rgb(32, 34, 37);
+}
+
 .scroll-content::-webkit-scrollbar{
     display: none;
    }
@@ -97,16 +101,16 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
 
 .userIcon{
     margin: auto;
-    height: 90%;
+    height: 95%;
     border: 3px;
     padding: 10px;
-    top: -10%;
+    top: -25%;
 }
 
 .dropdown-content {
 	font-family:'Merienda', cursive;
     display: block;
-    margin-top: 1.5%;
+    margin-top: 5.5%;
     position: absolute;
     background-color: #36393E;
     min-width: 200px;
@@ -126,4 +130,50 @@ body {background-color: #2C2F33; color: #99AAB5; font-size: 18px;}
 
 .dropdown-content a:hover {
     background-color: #22262b !important
+}
+
+.containerTable {
+    border-collapse: collapse; 
+    width: 100%; 
+    height: 100%
+}
+
+.centralContainer {
+    position: absolute;
+    width: 50%;
+    height: 60%;
+    top: 50%;
+    left: 50%;
+    margin: -12.5% 0 0 -25%;
+    border-radius: 2%;
+    background-color: #2C2F33;
+}
+
+.iconList {
+    position: relative;
+    height: 100%;
+    background-color:#23272A;
+}
+
+.guildTable {
+    border-collapse: separate; border-spacing: 1em 1em
+}
+
+.toReversElement {
+    width: 64px; 
+    height: 64px; 
+    border-radius: 50%; 
+    transform: scale(1, 1);
+}
+
+.chosenElement{
+    width: 64px;
+    height: 64px;
+    border-radius: 20%; 
+    transform: scale(1.3, 1.3);
+
+}
+
+.guildIcon{
+    width: 64px; heigth: 64px;
 }
