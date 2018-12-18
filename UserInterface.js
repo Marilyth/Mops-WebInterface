@@ -46,41 +46,33 @@ function switchToGuild(guild) {
 }
 
 function displayOptions(guild){
-    var display = document.getElementById('iconList');
+    var display = document.getElementById('contentList');
     display.innerHTML = "";
 
     var table = document.createElement('table');
-    table.style = "border-collapse: separate; border-spacing: 1em 1em";
+    table.style = "border-collapse: separate; border-spacing: 3px 3px; width: 100%;";
 
     var trackers = table.insertRow(-1);
     var moderation = table.insertRow(-1);
-    var information = table.insertRow(-1);
 
     var perm = guild['permissions'].toString(2);
     manageChannel = perm.charAt(perm.length - 5) == 1 || perm.charAt(perm.length - 4) == 1 || guild['owner'];
 
-    trackers.insertCell(-1).innerHTML = 'Manage Trackers';
-    trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Overwatch' style='width: 64px; height: 64px; opacity: 0;' src='https://i.imgur.com/0RIw2RB.png'>`;
-    if(manageChannel){
-        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitch' style='width: 64px; height: 64px; opacity: 0;' src='http://www.checkpointvg.com/wp-content/uploads/fYdty6yd.png'>`;
-        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Twitter' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png'>`;
-        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Reddit' style='width: 64px; height: 64px; opacity: 0;' src='https://www.redditstatic.com/icon.png'>`;
-        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Osu' style='width: 64px; height: 64px; opacity: 0;' src='https://vignette.wikia.nocookie.net/cytus/images/5/51/Osu_icon.png/revision/latest?cb=20141012114218'>`;
-        trackers.insertCell(-1).innerHTML = `<img class='zoomBox' title='Youtube' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn1.iconfinder.com/data/icons/logotypes/32/youtube-256.png'>`;
-    }
+    table.insertRow(-1).insertCell(-1).innerHTML = 'Trackers';
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Twitch'># Twitch</div>`;
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Twitter'># Twitter</div>`;
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Reddit'># Reddit</div>`;
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Osu'># Osu</div>`;
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Youtube'># Youtube</div>`;
 
-    moderation.insertCell(-1).innerHTML = 'Moderation';
-    moderation.insertCell(-1).innerHTML = `<img class='zoomBox' title='Giveaway' style='width: 64px; height: 64px; opacity: 0;' src='http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/gift-icon.png'>`;
-    moderation.insertCell(-1).innerHTML = `<img class='zoomBox' title='Poll' style='width: 64px; height: 64px; opacity: 0;' src='http://www.myiconfinder.com/uploads/iconsets/256-256-08f7586f151e4761d26cb03276ac9b71.png'>`;
-
-    information.insertCell(-1).innerHTML = 'Information';
-    information.insertCell(-1).innerHTML = `<img class='zoomBox' title='Daily Statistics' style='width: 64px; height: 64px; opacity: 0;' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp3PlZqozTISJOWTmsFGpVQxUoCt136-5cEJJZ3W3jb13-PsjP8Q'>`;
-    information.insertCell(-1).innerHTML = `<img class='zoomBox' title='Ranking' style='width: 64px; height: 64px; opacity: 0;' src='https://cdn.iconscout.com/public/images/icon/premium/png-512/leaderboards-medal-rostrum-podium-prize-stage-winner-31bf126e52798c58-512x512.png'>`;
+    table.insertRow(-1).insertCell(-1).innerHTML = 'Moderation';
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Poll'># Poll</div>`;
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Giveaway'># Giveaway</div>`;
 
     display.appendChild(table);
 
-    var toFadeIn = document.querySelectorAll('.zoomBox');
+    /*var toFadeIn = document.querySelectorAll('.channelButton');
     window.setTimeout(() => {Array.prototype.forEach.call(toFadeIn, x => {
         x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
-    })}, 300);
+    })}, 300);*/
 }
