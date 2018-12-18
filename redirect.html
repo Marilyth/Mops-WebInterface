@@ -28,18 +28,16 @@
     <script src="./Authentification.js"></script>
     <script src="./UserInterface.js"></script>
 
-    <table id='containerTable' border="0" cellspacing="0" cellpadding="0" align="left" style="height:100%;padding:0px;margin:0px;border:0px;vertical-align: top;">
+    <table id='containerTable' border="0" cellspacing="0" cellpadding="0" align="left" style="height:100%;padding:0px;margin:0px;border:0px;vertical-align: top; width: 100%;">
       <tr>
-        <td>
-          <div id='serverList' class='scroll-content' style='background-color: rgb(32, 34, 37); height: 100%; text-align: center;'></div>
+        <td style='width:7%; height: 100%;'>
+          <div id='serverList' class='scroll-content' style='background-color: rgb(32, 34, 37); text-align: center;'></div>
         </td>
-        <td style='overflow: hidden;'>
-          <td>
-            <div id="contentList" class='scroll-content' style='background-color: rgb(47, 49, 54); text-align: center; height:100%; width: 210px;'></div>
-          </td>
+        <td style='width: 23%; height: 100%;'>
+          <div id="optionList" class='scroll-content' style='background-color: rgb(47, 49, 54); text-align: center;'></div>
         </td>
-        <td>
-          <div id="iconList"></div>
+        <td style='width: 70%; height: 100%;'>
+          <div id="contentList" class='scroll-content' style='text-align: center;'></div>
         </td>
       </tr>
     </table>

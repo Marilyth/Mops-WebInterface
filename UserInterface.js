@@ -49,14 +49,14 @@ function switchToGuild(guild) {
 }
 
 function displayOptions(guild){
-    var display = document.getElementById('contentList');
+    var display = document.getElementById('optionList');
     display.innerHTML = "";
 
     var table = document.createElement('table');
     table.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%;";
 
     var firstRow = table.insertRow(-1).insertCell(-1);
-    firstRow.style = 'border-bottom : 2px solid #23272A; line-height: 50px; padding-left: 10px;';
+    firstRow.style = 'border-bottom : 2px solid rgb(32, 34, 37); line-height: 50px; padding-left: 10px;';
     firstRow.innerHTML = `<div id='serverName' style='text-align: left; width: 100%;'>${guild['name']}</div>`;
 
     var options = getOptions();
@@ -81,23 +81,76 @@ function displayOptions(guild){
     }
 
     display.appendChild(table);
+    displayContent(guild, 'Twitch');
 }
 
-function showTrackers(){
-    
+function displayContent(guild, option){
+    var display = document.getElementById('contentList');
+    display.innerHTML = "";
+
+    var table = document.createElement('table');
+    table.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%;";
+
+    var firstRow = table.insertRow(-1).insertCell(-1);
+    firstRow.style = 'border-bottom : 2px solid rgb(32, 34, 37); line-height: 50px; padding-left: 10px;';
+    firstRow.innerHTML = `<div id='optionName' style='text-align: center !important; width: 100%;'>${option}</div>`;
+
+    var content = getContent();
+
+    for(var curContent in content['Content']){
+        var acHeader = document.createElement('div');
+        acHeader.classList = 'accordion';
+        acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important;';
+        acHeader.id = content['Content'][curContent]['Name'] + 'AccordionHeader';
+        acHeader.innerText = content['Content'][curContent]['Name'];
+
+        for(var parameter in content['Content'][curContent]){
+            var input = document.createElement('input');
+            var description = document.createElement('div');
+            var innerTable = document.createElement('table');
+            innerTable.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%;";
+            var row = innerTable.insertRow(-1);
+            innerTable.style.textAlign = 'left';
+
+            description.innerText = parameter + ': ';
+            description.style.fontSize = '15px';
+            input.placeholder = content['Content'][curContent][parameter];
+            input.required = parameter == 'Name' || parameter == 'Channel' ? true : false;
+            input.readOnly = parameter == 'Name' ? true : false;
+            input.style.color = 'rgb(246, 246, 247)';
+            input.style.background = 'rgb(72, 75, 81)';
+            input.style.border = '0';
+            input.style.borderBottom = '2px solid rgb(32, 34, 37)';
+            var cellA = row.insertCell(-1);
+            cellA.style.width = '20%';
+            cellA.appendChild(description);
+            var cellB = row.insertCell(-1);
+            cellB.style.width = '80%';
+            cellB.appendChild(input);
+
+            acHeader.innerHTML += innerTable.outerHTML;
+        }
+
+        table.insertRow(-1).insertCell(-1).appendChild(acHeader);
+        acHeader.onclick = (function(acHeader){return function(){expandAccordion(acHeader, true);}})(acHeader);
+        console.log(acHeader);
+    }
+
+    display.appendChild(table);
 }
 
-function expandAccordion(header){
+function expandAccordion(header, keepCenter = false){
     var count = (header.innerHTML.match(/div>/g) || []).length;
-    var newHeight = count*31 + 30;
-    header.style = 'height: ' + newHeight + 'px;';
+    var count2 = (header.innerHTML.match(/textarea>/g) || []).length;
+    var newHeight = (count + count2)*31 + 30;
+    header.style.height = newHeight + 'px';
     console.log("Expanded " + header.id + " to "  + count + " Elements")
-    header.onclick = function() {compressAccordion(header);};
+    header.onclick = function() {compressAccordion(header, keepCenter);};
 }
 
-function compressAccordion(header){
-    header.style = 'height: 27px';
-    header.onclick = function() {expandAccordion(header);};
+function compressAccordion(header, keepCenter = false){
+    header.style.height = '27px';
+    header.onclick = function() {expandAccordion(header, keepCenter);};
 }
 
 function getChannels() {
@@ -111,4 +164,13 @@ function getOptions() {
     optionsDict['Moderation'] = ["Poll", "RoleInvite", "Giveaway"];
 
     return optionsDict;
+}
+
+function getContent() {
+    var contentDict = {};
+    contentDict['Parameters'] = ['Name', 'Notification', 'Channel'];
+    contentDict['Content'] = [{Name:'Phunk', Notification:'Stream went live!', Channel:'1234567890'}, 
+                              {Name:'Elajjaz', Notification:'Ela went live!', Channel:'1234567890'}];
+    
+    return contentDict;
 }
