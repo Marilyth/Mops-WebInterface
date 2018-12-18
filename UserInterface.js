@@ -52,27 +52,54 @@ function displayOptions(guild){
     var table = document.createElement('table');
     table.style = "border-collapse: separate; border-spacing: 3px 3px; width: 100%;";
 
-    var trackers = table.insertRow(-1);
-    var moderation = table.insertRow(-1);
+    table.insertRow(-1).insertCell(-1).innerHTML = `<div id='serverName' style='background-color: rgb(32, 34, 37); text-align: left; width: 100%;'>${guild['name']}</div>`;
 
-    var perm = guild['permissions'].toString(2);
-    manageChannel = perm.charAt(perm.length - 5) == 1 || perm.charAt(perm.length - 4) == 1 || guild['owner'];
+    var options = getOptions();
 
-    table.insertRow(-1).insertCell(-1).innerHTML = 'Trackers';
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Twitch'># Twitch</div>`;
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Twitter'># Twitter</div>`;
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Reddit'># Reddit</div>`;
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Osu'># Osu</div>`;
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Youtube'># Youtube</div>`;
+    for(var category in options){
+        var acHeader = document.createElement('div');
+        acHeader.classList = 'accordion';
+        acHeader.id = category + 'AccordionHeader';
+        acHeader.innerText = category;
 
-    table.insertRow(-1).insertCell(-1).innerHTML = 'Moderation';
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Poll'># Poll</div>`;
-    table.insertRow(-1).insertCell(-1).innerHTML = `<div class='channelButton' title='Giveaway'># Giveaway</div>`;
+        for(var index in options[category]){
+            var commandButton = document.createElement('div');
+            commandButton.className = 'channelButton';
+            commandButton.innerText = '# ' + options[category][index];
+            commandButton.title = options[category][index];
+            acHeader.innerHTML += commandButton.outerHTML;
+        }
+
+        table.insertRow(-1).insertCell(-1).appendChild(acHeader);
+        acHeader.onclick = (function(acHeader){return function(){expandAccordion(acHeader);}})(acHeader);
+        console.log(acHeader);
+    }
 
     display.appendChild(table);
+}
 
-    /*var toFadeIn = document.querySelectorAll('.channelButton');
-    window.setTimeout(() => {Array.prototype.forEach.call(toFadeIn, x => {
-        x.style = "width: 64px; height: 64px; transition: all 0.3s ease; opacity: 1;";
-    })}, 300);*/
+function expandAccordion(header){
+    var count = (header.innerHTML.match(/div>/g) || []).length;
+    var newHeight = count*22 + count*3 + 29;
+    header.style = 'height: ' + newHeight + 'px;';
+    console.log("Expanded " + header.id + " to "  + count + " Elements")
+    header.onclick = function() {compressAccordion(header);};
+}
+
+function compressAccordion(header){
+    header.style = 'height: 29px';
+    header.onclick = function() {expandAccordion(header);};
+}
+
+function getChannels() {
+    //ToDo
+}
+
+function getOptions() {
+    var optionsDict = {};
+    optionsDict['Trackers'] = ["Osu", "Twitch", "Twitter", "Youtube", "YoutubeLive", "Reddit", "HTML", "WoW", "OSRS", "TwitchClips"];
+    optionsDict['Information'] = ["GetStats"];
+    optionsDict['Moderation'] = ["Poll", "RoleInvite", "Giveaway"];
+
+    return optionsDict;
 }

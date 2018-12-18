@@ -96,11 +96,3 @@ function getGuilds() {
     request.setRequestHeader("Content-Type", "application/json");
     request.send();
 }
-
-function getChannels() {
-    //ToDo
-}
-
-function getOptions() {
-    //ToDo
-}
