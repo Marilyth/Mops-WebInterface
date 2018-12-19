@@ -1,4 +1,5 @@
 var lastGuild = null;
+var content = {};
 
 function displayUser() {
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
@@ -100,7 +101,7 @@ function displayContent(option){
     firstRow.style = 'border-bottom : 2px solid rgb(32, 34, 37); line-height: 50px; padding-left: 10px;';
     firstRow.innerHTML = `<div id='optionName' style='text-align: center !important; width: 100%;'>${option}</div>`;
 
-    var content = getContent(option);
+    getContent(option);
 
     for(var curContent in content['Content']){
         var acHeader = document.createElement('div');
@@ -245,27 +246,27 @@ function getChannels() {
 
 function getOptions() {
     var optionsDict = {};
-    optionsDict['Trackers'] = ["Osu", "Twitch", "Twitter", "Youtube", "YoutubeLive", "Reddit", "HTML", "WoW", "OSRS", "TwitchClips", "News", "Overwatch"];
-    optionsDict['Information'] = ["GetStats"];
-    optionsDict['Moderation'] = ["Poll", "RoleInvite", "Giveaway"];
+    optionsDict['Trackers'] = ["Osu", "Twitch", "Twitter", "Youtube", "YoutubeLive", "Reddit", "HTML", "WoW", "OSRS", "TwitchClip", "News", "Overwatch"];
+    //optionsDict['Information'] = ["GetStats"];
+    //optionsDict['Moderation'] = ["Poll", "RoleInvite", "Giveaway"];
 
     return optionsDict;
 }
 
 function getContent(type) {
-    var contentDict = {};
-    if(type == 'Twitch'){
-        contentDict['Parameters'] = ['Name', 'Notification', 'Channel'];
-        contentDict['Content'] = [{Name:'Phunk', Notification:'Stream went live!', Channel:'1234567890'}, 
-                              {Name:'Elajjaz', Notification:'Ela went live!', Channel:'1234567890'}];
-    } else {
-        contentDict['Parameters'] = ['Name', 'Notification', 'IsSomething', 'Channel'];
-        contentDict['Content'] = [{Name:'Phunki', Notification:'Stream went live!', Channel:'1234567890', IsSomething: 'True'}, 
-                                  {Name:'Mayo', Notification:'asff went live!', Channel:'1234567890', IsSomething: 'False'},
-                                  {Name:'Test', Notification:'Twot went live!', Channel:'1234567890', IsSomething: 'True'}];
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = () => {
+        if (request.status >= 200 && request.status < 400) {
+            content = JSON.parse(request.responseText);
+        } else {
+            //sessionStorage.removeItem('TokenInformation');
+            //redirect();
+        }
     }
-    
-    return contentDict;
+    console.log(type);
+    request.open("GET", `http://5.45.104.29:5000/api/tracker?guild=${lastGuild['id']}&type=${type}`, false);
+    request.send();
 }
 
 function removeContent(type, name, channel){

@@ -2,6 +2,7 @@ sessionStorage.setItem('APIENDPOINT', "https://discordapp.com/api/v6");
 sessionStorage.setItem('CLIENT_ID', "305398845389406209");
 sessionStorage.setItem('CLIENT_SECRET', "bPQW1eyzOgD7NOwHWH0earXroK__rj_T");
 sessionStorage.setItem('REDIRECT_URI', "http://5.45.104.29/Mops-WebInterface/redirect.html");
+sessionStorage.setItem('MOPSAPIENDPOINT', "http://5.45.104.29:5000/api/");
 
 function redirect() {
     window.location.replace(`https://discordapp.com/oauth2/authorize?client_id=${sessionStorage.getItem('CLIENT_ID')}&scope=guilds%20identify&response_type=code&redirect_uri=${sessionStorage.getItem('REDIRECT_URI')}`);
