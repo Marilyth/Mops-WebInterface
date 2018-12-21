@@ -99,6 +99,7 @@ body {background-color: rgb(74, 78, 85); color: rgb(246, 246, 247); font-family:
 .scroll-content{
     overflow-y: scroll;
     overflow-x: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
     width: 100%;
     height: 100%;
 }
@@ -126,7 +127,6 @@ body {background-color: rgb(74, 78, 85); color: rgb(246, 246, 247); font-family:
     padding-right: 10px !important;
     border: none; 
     font-size: 20px;
-    left:0%;
     color: rgb(114, 118, 125);
     text-align: left;
     transition: all 0.2s ease;
@@ -139,4 +139,9 @@ body {background-color: rgb(74, 78, 85); color: rgb(246, 246, 247); font-family:
 
 .accordion::-webkit-scrollbar{
     display: none;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+select:hover{
+    background-color: rgb(34, 52, 119);
 }
