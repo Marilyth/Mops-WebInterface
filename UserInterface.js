@@ -76,7 +76,7 @@ function displayOptions() {
             commandButton.style.paddingLeft = '5px';
             (function (commandName) {
                 commandButton.addEventListener('click', (event) => {
-                    displayContent(commandName);
+                    getContent(commandName);
                     event.stopPropagation();
                 });
             })(commandName);
@@ -103,7 +103,6 @@ function displayContent(option) {
     firstRow.style = 'border-bottom : 2px solid rgb(32, 34, 37); line-height: 50px; padding-left: 10px;';
     firstRow.innerHTML = `<div id='optionName' style='text-align: center !important; width: 100%;'>${option}</div>`;
 
-    getContent(option);
     var headers = makeInputTable(option);
     console.log(headers);
     for (var index in headers) {
@@ -145,38 +144,91 @@ function getOptions() {
 }
 
 function getContent(type) {
+    var display = document.getElementById('contentList');
+    display.innerHTML = "<img src='https://i.gifer.com/embedded/download/ZKZg.gif' style='width: 50px;height: 50px; top: 50%;'/>"
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             content = JSON.parse(request.responseText);
+            displayContent(type);
         } else {
             //sessionStorage.removeItem('TokenInformation');
             //redirect();
         }
     }
     console.log(type);
-    request.open("GET", `http://5.45.104.29:5000/api/content?guild=${lastGuild['id']}&type=${type}`, false);
+    request.open("GET", `http://5.45.104.29:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
     request.send();
 }
 
-function removeContent(type, name, channel) {
+function removeContent(type, name, contentDict) {
+    var request = new XMLHttpRequest();
 
+    request.onreadystatechange = () => {
+        if (request.status >= 200 && request.status < 400) {
+            if(!request.responseText.startsWith("Success")){
+                alert(request.responseText);
+            } else {
+                getContent(type);
+            }
+        } else {
+
+        }
+    }
+    console.log(type);
+    
+    request.open("POST", `http://5.45.104.29:5000/api/content/remove`);
+    var userInformation = JSON.parse(sessionStorage.getItem('user'));
+    request.setRequestHeader("Type", type);
+    request.setRequestHeader("User", userInformation["id"]);
+    request.send(JSON.stringify(contentDict["OldValue"]));
 }
 
 function updateContent(type, name, contentDict) {
+    var request = new XMLHttpRequest();
 
+    request.onreadystatechange = () => {
+        if (request.status >= 200 && request.status < 400) {
+            if(!request.responseText.startsWith("Success")){
+                alert(request.responseText);
+            } else {
+                getContent(type);
+            }
+        } else {
+
+        }
+    }
+    console.log(type);
+    
+    request.open("POST", `http://5.45.104.29:5000/api/content/update`);
+    var userInformation = JSON.parse(sessionStorage.getItem('user'));
+    request.setRequestHeader("Type", type);
+    request.setRequestHeader("User", userInformation["id"]);
+    request.send(JSON.stringify(contentDict));
 }
 
 function addContent(type, name, contentDict) {
-    //Send stuff to Mops-API
-    if (false) {
-        //Display content again, this time with added content
-        console.log('Added content! o:');
-        displayContent();
-    } else {
-        alert('Something went wrong!\nError: ');
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = () => {
+        if (request.status >= 200 && request.status < 400) {
+            if(!request.responseText.startsWith("Success")){
+                alert(request.responseText);
+            } else {
+                getContent(type);
+            }
+        } else {
+
+        }
     }
+    console.log(type);
+    
+    request.open("POST", `http://5.45.104.29:5000/api/content/add`);
+    var userInformation = JSON.parse(sessionStorage.getItem('user'));
+    request.setRequestHeader("Type", type);
+    request.setRequestHeader("User", userInformation["id"]);
+    request.send(JSON.stringify(contentDict["NewValue"]));
 }
 
 function getValues(index, name) {
@@ -203,7 +255,7 @@ function makeInputTable(option) {
         var innerTable = document.createElement('table');
         innerTable.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%; text-align: left; color: rgb(246, 246, 247);";
 
-        for (var parameter in content['Content'][curContent]) {
+        for (var parameter in content['Parameters']) {
             var input;
             var description = document.createElement('div');
             var row = innerTable.insertRow(-1);
@@ -254,16 +306,16 @@ function makeInputTable(option) {
         update.style.border = '2px solid rgb(67, 181, 129)';
         update.style.width = '100%';
         var curName = content['Content'][curContent]['Name'];
-        console.log(curName);
-        //update.onclick = (function (curName, event) { updateContent(option, curName, getValues(content['Parameters'], name)); event.stopPropagation(); })(curName, event);
         (function(curName, curContent){update.addEventListener('click', (event) => {updateContent(option, curName, getValues(curContent, curName)); event.stopPropagation();})})(curName, curContent);
+
         var remove = document.createElement('button');
         remove.className = 'invite-button';
+        remove.innerText = 'Remove';
         remove.style.color = 'rgb(212, 56, 56)';
         remove.style.background = 'rgb(72,75,81)';
         remove.style.border = '2px solid rgb(212, 56, 56)';
         remove.style.width = '25%';
-        remove.innerText = 'Remove';
+        (function(curName, curContent){remove.addEventListener('click', (event) => {removeContent(option, curName, getValues(curContent, curName)); event.stopPropagation();})})(curName, curContent);
 
         var row = innerTable.insertRow(-1);
         var cellA = row.insertCell(-1);
