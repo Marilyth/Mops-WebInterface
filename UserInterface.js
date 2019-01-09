@@ -1,4 +1,5 @@
 var lastGuild = null;
+var autoOpenIndex = "New";
 var content = {};
 
 function displayUser() {
@@ -104,15 +105,20 @@ function displayContent(option) {
     firstRow.innerHTML = `<div id='optionName' style='text-align: center !important; width: 100%;'>${option}</div>`;
 
     var headers = makeInputTable(option);
-    console.log(headers);
+    headers.push(makeNewInput(option));
+
     for (var index in headers) {
         var curHeader = headers[index];
         table.insertRow(-1).insertCell(-1).appendChild(headers[index]);
         headers[index].onclick = (function (curHeader) { return function () { expandAccordion(curHeader); } })(curHeader);
+
+        if(headers[index].id.startsWith(autoOpenIndex)) {
+            var headerToExpand = headers[index];
+            (function(headerToExpand){setTimeout(function(){ expandAccordion(headerToExpand)}, 1)})(headerToExpand);
+        }
         console.log(headers[index]);
     }
 
-    table.insertRow(-1).insertCell(-1).appendChild(makeNewInput(option));
     display.appendChild(table);
 }
 
@@ -167,9 +173,9 @@ function removeContent(type, name, contentDict) {
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
-            if(!request.responseText.startsWith("Success")){
+            if(request.responseText.startsWith("ERROR")){
                 alert(request.responseText);
-            } else {
+            } else if(request.responseText.startsWith("Success")) {
                 getContent(type);
             }
         } else {
@@ -190,16 +196,17 @@ function updateContent(type, name, contentDict) {
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
-            if(!request.responseText.startsWith("Success")){
+            if(request.responseText.startsWith("ERROR")){
                 alert(request.responseText);
-            } else {
+            } else if(request.responseText.startsWith("Success")) {
+                autoOpenIndex = name;
                 getContent(type);
             }
         } else {
 
         }
     }
-    console.log(type);
+    console.log(contentDict);
     
     request.open("POST", `http://5.45.104.29:5000/api/content/update`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
@@ -213,9 +220,10 @@ function addContent(type, name, contentDict) {
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
-            if(!request.responseText.startsWith("Success")){
+            if(request.responseText.startsWith("ERROR")){
                 alert(request.responseText);
-            } else {
+            } else if(request.responseText.startsWith("Success")) {
+                autoOpenIndex = contentDict["NewValue"]["_Name"];
                 getContent(type);
             }
         } else {
@@ -233,8 +241,9 @@ function addContent(type, name, contentDict) {
 
 function getValues(index, name) {
     dict = {"NewValue": {}, "OldValue": content["Content"][index]};
-
+    dict["NewValue"]["_Name"] = name;
     for (entry in content["Parameters"]) {
+        if(entry.startsWith("_") && name != "New") continue;
         var curValue = document.getElementById(name + entry).value;
         dict["NewValue"][entry] = curValue;
     }
@@ -249,13 +258,14 @@ function makeInputTable(option) {
         var acHeader = document.createElement('div');
         acHeader.classList = 'accordion';
         acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important;';
-        acHeader.id = content['Content'][curContent]['Name'] + 'AccordionHeader';
-        acHeader.innerText = content['Content'][curContent]['Name'];
+        acHeader.id = content['Content'][curContent]['_Name'] + 'AccordionHeader';
+        acHeader.innerText = content['Content'][curContent]['_Name'];
 
         var innerTable = document.createElement('table');
         innerTable.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%; text-align: left; color: rgb(246, 246, 247);";
 
         for (var parameter in content['Parameters']) {
+            if(parameter.startsWith("_")) continue;
             var input;
             var description = document.createElement('div');
             var row = innerTable.insertRow(-1);
@@ -281,9 +291,10 @@ function makeInputTable(option) {
             } else {
                 input = document.createElement('input')
                 input.value = content['Content'][curContent][parameter];
+                input.autocomplete = false;
             }
 
-            input.id = content['Content'][curContent]['Name'] + parameter;
+            input.id = content['Content'][curContent]["_Name"] + parameter;
             input.style.color = 'rgb(246, 246, 247)';
             input.style.background = 'rgb(72, 75, 81)';
             input.style.border = '0';
@@ -305,7 +316,7 @@ function makeInputTable(option) {
         update.style.background = 'rgb(72,75,81)';
         update.style.border = '2px solid rgb(67, 181, 129)';
         update.style.width = '100%';
-        var curName = content['Content'][curContent]['Name'];
+        var curName = content['Content'][curContent]['_Name'];
         (function(curName, curContent){update.addEventListener('click', (event) => {updateContent(option, curName, getValues(curContent, curName)); event.stopPropagation();})})(curName, curContent);
 
         var remove = document.createElement('button');
@@ -364,6 +375,7 @@ function makeNewInput(option) {
             }
         } else {
             input = document.createElement('input')
+            input.autocomplete = false;
         }
 
         input.id = 'New' + parameter;
