@@ -22,6 +22,9 @@ body {background-color: rgb(74, 78, 85); color: rgb(246, 246, 247); font-family:
 }
 
 .channelButton {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: inline-block;
     height: 30px;
     line-height: 30px;

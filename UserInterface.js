@@ -77,6 +77,7 @@ function displayOptions() {
             commandButton.style.paddingLeft = '5px';
             (function (commandName) {
                 commandButton.addEventListener('click', (event) => {
+                    autoOpenIndex = "New";
                     getContent(commandName);
                     event.stopPropagation();
                 });
@@ -114,7 +115,7 @@ function displayContent(option) {
 
         if(headers[index].id.startsWith(autoOpenIndex)) {
             var headerToExpand = headers[index];
-            (function(headerToExpand){setTimeout(function(){ expandAccordion(headerToExpand)}, 1)})(headerToExpand);
+            (function(headerToExpand){setTimeout(function(){ expandAccordion(headerToExpand)}, 30)})(headerToExpand);
         }
         console.log(headers[index]);
     }
