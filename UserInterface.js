@@ -51,11 +51,11 @@ function switchToGuild(guild) {
     if (lastGuild !== null) {
         var toReverse = document.getElementById(`image:${lastGuild['id']}`);
         toReverse.className = "roundSquare";
-        toReverse.style = "width: 46px; height: 46px; margin: 0 auto; display:block; border-radius: 50%; transform: scale(1, 1);";
+        toReverse.style = "width: 46px; height: 46px; margin: 0 auto; display:block; border-radius: 50%;";
     }
 
     var chosen = document.getElementById(`image:${guild['id']}`);
-    chosen.style = 'width: 46px; height: 46px; margin: 0 auto; display:block; border-radius: 20%; transform: scale(1.3, 1.3);'
+    chosen.style = 'width: 46px; height: 46px; margin: 0 auto; display:block; border-radius: 20%;'
     chosen.className = "selected-image";
     lastGuild = guild;
     displayOptions(guild);
@@ -391,16 +391,16 @@ function makeNewInput(option) {
 
         if (Array.isArray(content["Parameters"][parameter])) {
             input = document.createElement('select');
-            input.required = true;
+
             for (var optionIndex in content["Parameters"][parameter]) {
                 var optionValue = document.createElement('option');
                 optionValue.text = content["Parameters"][parameter][optionIndex];
                 optionValue.value = content["Parameters"][parameter][optionIndex];
+                optionValue.id = "New" + content["Parameters"][parameter][optionIndex];
                 input.appendChild(optionValue);
             }
         } else {
             input = document.createElement('input')
-            input.autocomplete = false;
         }
 
         input.id = 'New' + parameter;
@@ -412,6 +412,7 @@ function makeNewInput(option) {
         input.style.borderBottom = '1px solid rgb(54, 57, 63)';
         input.style.outline = 'none';
         input.onclick = function (event) { event.stopPropagation(); };
+        if(input.childElementCount > 0) input.firstChild.selected = true;
 
         cellA.style.width = '20%';
         cellA.appendChild(description);
