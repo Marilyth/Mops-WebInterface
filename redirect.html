@@ -23,7 +23,7 @@
 
   </div>
 
-  <div class="centralContainer">
+  <div class="centralContainer" id="Container">
 
     <script src="./Authentification.js"></script>
     <script src="./UserInterface.js"></script>
@@ -31,12 +31,15 @@
     <table id='containerTable' border="0" cellspacing="0" cellpadding="0" align="left" style="height:100%;padding:0px;margin:0px;border:0px;vertical-align: top; width: 100%;">
       <tr>
         <td style='width:7%; height: 100%;'>
+          <div id="serverListHeader" style='background-color: rgb(32, 34, 37); text-align: center;'></div>
           <div id='serverList' class='scroll-content' style='background-color: rgb(32, 34, 37); text-align: center;'></div>
         </td>
         <td style='width: 23%; height: 100%;'>
+          <div id="optionListHeader" style='background-color: rgb(47, 49, 54); text-align: left;'></div>
           <div id="optionList" class='scroll-content' style='background-color: rgb(47, 49, 54); text-align: center;'></div>
         </td>
         <td style='width: 70%; height: 100%;'>
+          <div id="contentListHeader" style='text-align: center;'></div>
           <div id="contentList" class='scroll-content' style='text-align: center;'></div>
         </td>
       </tr>
@@ -44,6 +47,27 @@
 
   </div>
   <script>
+    var container = document.getElementById("Container");
+    var list1 = document.getElementById("serverList");
+    var list1b = document.getElementById("serverListHeader");
+    var list2 = document.getElementById("optionList");
+    var list2b = document.getElementById("optionListHeader");
+    var list3 = document.getElementById("contentList");
+    var list3b = document.getElementById("contentListHeader");
+    container.style.width = window.innerWidth * 0.6 + "px";
+    container.style.height = window.innerHeight * 0.7 + "px";
+    list1.style.width = window.innerWidth * 0.6 * 0.09 + "px";
+    list1.style.height = window.innerHeight * 0.7 - 56 + "px";
+    list1b.style.width = window.innerWidth * 0.6 * 0.09 + "px";
+    list1b.style.height = "56px";
+    list2.style.width = window.innerWidth * 0.6 * 0.21 + "px";
+    list2.style.height = window.innerHeight * 0.7 - 52 + "px";
+    list2b.style.width = window.innerWidth * 0.6 * 0.21 + "px";
+    list2b.style.height = "52px";
+    list3.style.width = window.innerWidth * 0.6 * 0.697 + "px";
+    list3.style.height = window.innerHeight * 0.697 - 52 + "px";
+    list3b.style.width = window.innerWidth * 0.6 * 0.7 + "px";
+    list3b.style.height = "52px";
     getToken();
     displayUser();
     displayGuilds();

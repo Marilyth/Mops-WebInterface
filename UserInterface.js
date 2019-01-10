@@ -11,10 +11,20 @@ function displayUser() {
 function displayGuilds() {
     var guilds = JSON.parse(sessionStorage.getItem('guilds'));
 
+    var inviteButton = document.createElement('img');
+    inviteButton.src = "https://cdn3.iconfinder.com/data/icons/buttons/512/Icon_11-512.png";
+    inviteButton.className = "clickable"
+    inviteButton.style = `text-align: center !important; width: 46px; height: 46px; border-bottom: 2px solid rgb(77, 77, 77);`;
+    inviteButton.style.paddingTop = "4px";
+    inviteButton.style.paddingBottom = "4px";
+    inviteButton.onclick = function(){window.open(`https://discordapp.com/api/oauth2/authorize?client_id=305398845389406209&permissions=271707136&redirect_uri=${sessionStorage.getItem(`REDIRECT_URI`)}&scope=bot`, '_blank').focus()};
+    var head = document.getElementById('serverListHeader');
+    head.innerHTML = "";
+    head.appendChild(inviteButton);
+
     var table = document.createElement('table');
     table.id = "guilds";
-    table.style = "border-collapse: separate; border-spacing: 0.5em 0.5em";
-    table.insertRow(-1).insertCell(-1).innerHTML = `<button class="invite-button" type="button" onclick="window.open('https://discordapp.com/api/oauth2/authorize?client_id=305398845389406209&permissions=271707136&redirect_uri=${sessionStorage.getItem(`REDIRECT_URI`)}&scope=bot', '_blank').focus();"> Invite </button>`
+    table.style = "border-collapse: separate; border-spacing: 0.5em 0.5em; width: 100%;";
 
     guilds.forEach(guild => {
         var image = document.createElement('img');
@@ -33,7 +43,8 @@ function displayGuilds() {
         cell.id = `cell:${guild['id']}`;
     });
 
-    document.getElementById("serverList").appendChild(table);
+    var list = document.getElementById("serverList");
+    list.appendChild(table);
 }
 
 function switchToGuild(guild) {
@@ -57,9 +68,12 @@ function displayOptions() {
     var table = document.createElement('table');
     table.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%;";
 
-    var firstRow = table.insertRow(-1).insertCell(-1);
-    firstRow.style = 'border-bottom : 2px solid rgb(32, 34, 37); line-height: 50px; padding-left: 10px;';
-    firstRow.innerHTML = `<div id='serverName' style='text-align: left; width: 100%;'>${lastGuild['name']}</div>`;
+    var serverName = document.createElement('div');
+    serverName.style = `text-align: center !important; width: 100%; border-bottom: 2px solid rgb(32, 34, 37); line-height: 50px;`;
+    serverName.innerText = lastGuild['name'];
+    var head = document.getElementById('optionListHeader');
+    head.innerHTML = "";
+    head.appendChild(serverName);
 
     var options = getOptions();
 
@@ -97,13 +111,16 @@ function displayContent(option) {
     var display = document.getElementById('contentList');
     display.innerHTML = "";
 
+    var optionName = document.createElement('div');
+    optionName.style = `text-align: center !important; width: 100%; border-bottom: 2px solid rgb(32, 34, 37); line-height: 50px;`;
+    optionName.innerText = option;
+    var head = document.getElementById('contentListHeader');
+    head.innerHTML = "";
+    head.appendChild(optionName);
+
     var table = document.createElement('table');
     table.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%;";
     table.id = 'contentTable';
-
-    var firstRow = table.insertRow(-1).insertCell(-1);
-    firstRow.style = 'border-bottom : 2px solid rgb(32, 34, 37); line-height: 50px; padding-left: 10px;';
-    firstRow.innerHTML = `<div id='optionName' style='text-align: center !important; width: 100%;'>${option}</div>`;
 
     var headers = makeInputTable(option);
     headers.push(makeNewInput(option));
@@ -115,7 +132,13 @@ function displayContent(option) {
 
         if(headers[index].id.startsWith(autoOpenIndex)) {
             var headerToExpand = headers[index];
-            (function(headerToExpand){setTimeout(function(){ expandAccordion(headerToExpand)}, 30)})(headerToExpand);
+            (function(headerToExpand){
+                setTimeout(function(){
+                    headerToExpand.style.backgroundColor = "rgb(80,83,89)";
+                    setTimeout(function(){headerToExpand.style.backgroundColor = "rgb(72,75,81)"}, 200);
+                    expandAccordion(headerToExpand)
+                }, 30)
+            })(headerToExpand);
         }
         console.log(headers[index]);
     }
@@ -258,7 +281,8 @@ function makeInputTable(option) {
     for (var curContent in content['Content']) {
         var acHeader = document.createElement('div');
         acHeader.classList = 'accordion';
-        acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important;';
+        acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+        acHeader.style.width = window.innerWidth * 0.6 * 0.7 + "px";
         acHeader.id = content['Content'][curContent]['_Name'] + 'AccordionHeader';
         acHeader.innerText = content['Content'][curContent]['_Name'];
 
