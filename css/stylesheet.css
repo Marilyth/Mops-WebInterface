@@ -1,5 +1,6 @@
 html {height: 100%; width: 100%; padding: 0px; margin: 0px;}
-body {background-color: rgb(74, 78, 85); color: rgb(246, 246, 247); font-family: 'Noto Sans', sans-serif; font-size: 18px; height: 100%; widows: 100%; padding: 0px; margin: 0px}
+body {background-color: rgb(74, 78, 85); color: rgb(246, 246, 247); font-size: 18px; height: 100%; widows: 100%; padding: 0px; margin: 0px}
+body, input, select, textarea { font-family: 'Noto Sans', sans-serif;}
 
 @font-face {
     font-family: 'Whitney';

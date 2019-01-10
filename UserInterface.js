@@ -90,18 +90,17 @@ function displayOptions() {
             var commandName = options[category][index];
             commandButton.style.paddingLeft = '5px';
             (function (commandName) {
-                commandButton.addEventListener('click', (event) => {
+                commandButton.onclick = function(event){
                     autoOpenIndex = "New";
                     getContent(commandName);
                     event.stopPropagation();
-                });
+                };
             })(commandName);
             acHeader.appendChild(commandButton);
         }
 
         table.insertRow(-1).insertCell(-1).appendChild(acHeader);
         acHeader.onclick = (function (acHeader) { return function () { expandAccordion(acHeader); } })(acHeader);
-        console.log(acHeader);
     }
 
     display.appendChild(table);
@@ -140,7 +139,6 @@ function displayContent(option) {
                 }, 30)
             })(headerToExpand);
         }
-        console.log(headers[index]);
     }
 
     display.appendChild(table);
@@ -174,26 +172,48 @@ function getOptions() {
 }
 
 function getContent(type) {
+    console.log(type);
     var display = document.getElementById('contentList');
-    display.innerHTML = "<img src='https://i.gifer.com/embedded/download/ZKZg.gif' style='width: 50px;height: 50px; top: 50%;'/>"
+    display.innerHTML = "<img src='https://avanaartsdistrict.com/views/site/images/icons/loading.gif' style='width: 50px;height: 50px; top: 50%;'/>"
     var request = new XMLHttpRequest();
+    request.timeout = 5000;
+
+    request.ontimeout = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){getContent(type)}, 3000);
+    }
+
+    request.onerror = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){getContent(type)}, 3000);
+    }
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             content = JSON.parse(request.responseText);
             displayContent(type);
         } else {
-            //sessionStorage.removeItem('TokenInformation');
-            //redirect();
+            //alert(request.responseText);
         }
     }
-    console.log(type);
     request.open("GET", `http://5.45.104.29:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
     request.send();
 }
 
 function removeContent(type, name, contentDict) {
     var request = new XMLHttpRequest();
+
+    request.timeout = 5000;
+
+    request.ontimeout = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){getContent(type)}, 3000);
+    }
+
+    request.onerror = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){getContent(type)}, 3000);
+    }
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
@@ -218,6 +238,17 @@ function removeContent(type, name, contentDict) {
 function updateContent(type, name, contentDict) {
     var request = new XMLHttpRequest();
 
+    request.timeout = 5000;
+
+    request.ontimeout = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){getContent(type)}, 3000);
+    }
+
+    request.onerror = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){getContent(type)}, 3000);
+    }
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             if(request.responseText.startsWith("ERROR")){
@@ -241,6 +272,18 @@ function updateContent(type, name, contentDict) {
 
 function addContent(type, name, contentDict) {
     var request = new XMLHttpRequest();
+
+    request.timeout = 5000;
+
+    request.ontimeout = () => {
+        display.innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){request.send(JSON.stringify(contentDict["NewValue"]))}, 3000);
+    }
+
+    request.onerror = () => {
+        display.innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){request.send(JSON.stringify(contentDict["NewValue"]))}, 3000);
+    }
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
@@ -314,9 +357,11 @@ function makeInputTable(option) {
                     input.appendChild(optionValue);
                 }
             } else {
-                input = document.createElement('input')
-                input.value = content['Content'][curContent][parameter];
-                input.autocomplete = false;
+                input = document.createElement('textarea');
+                input.style.resize = "none";
+                input.style.fontSize = "13.3px";
+                input.rows = 1;
+                input.innerText = content['Content'][curContent][parameter];
             }
 
             input.id = content['Content'][curContent]["_Name"] + parameter;
@@ -342,7 +387,7 @@ function makeInputTable(option) {
         update.style.border = '2px solid rgb(67, 181, 129)';
         update.style.width = '100%';
         var curName = content['Content'][curContent]['_Name'];
-        (function(curName, curContent){update.addEventListener('click', (event) => {updateContent(option, curName, getValues(curContent, curName)); event.stopPropagation();})})(curName, curContent);
+        (function(curName, curContent){update.onclick = function(event){updateContent(option, curName, getValues(curContent, curName)); event.stopPropagation();}})(curName, curContent);
 
         var remove = document.createElement('button');
         remove.className = 'invite-button';
@@ -400,7 +445,10 @@ function makeNewInput(option) {
                 input.appendChild(optionValue);
             }
         } else {
-            input = document.createElement('input')
+            input = document.createElement('textarea');
+            input.style.resize = "none";
+            input.style.fontSize = "13.3px";
+            input.rows = 1;
         }
 
         input.id = 'New' + parameter;
