@@ -1,5 +1,6 @@
 var lastGuild = null;
-var autoOpenIndex = "New";
+var autoOpenContent = "New";
+var autoOpenOption = "Trackers";
 var content = {};
 
 function displayUser() {
@@ -34,7 +35,7 @@ function displayGuilds() {
         if (`${guild['icon']}` != 'null')
             image.src = `https://cdn.discordapp.com/icons/${guild["id"]}/${guild["icon"]}.png`;
         else
-            image.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/600px-Icon-round-Question_mark.svg.png`;
+            image.src = `./css/defaultguild.jpg`;
         image.className = "roundSquare";
         image.id = `image:${guild['id']}`;
 
@@ -44,6 +45,7 @@ function displayGuilds() {
     });
 
     var list = document.getElementById("serverList");
+    list.innerHTML = "";
     list.appendChild(table);
 }
 
@@ -62,14 +64,19 @@ function switchToGuild(guild) {
 }
 
 function displayOptions() {
-    var display = document.getElementById('optionList');
+    var display = document.getElementById('contentList');
+    display.innerHTML = "";
+    display = document.getElementById('contentListHeader');
+    display.innerHTML = "";
+
+    display = document.getElementById('optionList');
     display.innerHTML = "";
 
     var table = document.createElement('table');
     table.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%;";
 
     var serverName = document.createElement('div');
-    serverName.style = `text-align: center !important; width: 100%; border-bottom: 2px solid rgb(32, 34, 37); line-height: 50px;`;
+    serverName.style = `padding-left: 10px; border-bottom: 2px solid rgb(32, 34, 37); line-height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`;
     serverName.innerText = lastGuild['name'];
     var head = document.getElementById('optionListHeader');
     head.innerHTML = "";
@@ -91,12 +98,21 @@ function displayOptions() {
             commandButton.style.paddingLeft = '5px';
             (function (commandName) {
                 commandButton.onclick = function(event){
-                    autoOpenIndex = "New";
+                    autoOpenContent = "New";
                     getContent(commandName);
                     event.stopPropagation();
                 };
             })(commandName);
             acHeader.appendChild(commandButton);
+        }
+
+        if(acHeader.id.startsWith(autoOpenOption)) {
+            var headerToExpand = acHeader;
+            (function(headerToExpand){
+                setTimeout(function(){
+                    expandAccordion(headerToExpand)
+                }, 30)
+            })(headerToExpand);
         }
 
         table.insertRow(-1).insertCell(-1).appendChild(acHeader);
@@ -111,7 +127,7 @@ function displayContent(option) {
     display.innerHTML = "";
 
     var optionName = document.createElement('div');
-    optionName.style = `text-align: center !important; width: 100%; border-bottom: 2px solid rgb(32, 34, 37); line-height: 50px;`;
+    optionName.style = `width: 100%; border-bottom: 2px solid rgb(32, 34, 37); line-height: 50px;`;
     optionName.innerText = option;
     var head = document.getElementById('contentListHeader');
     head.innerHTML = "";
@@ -129,7 +145,7 @@ function displayContent(option) {
         table.insertRow(-1).insertCell(-1).appendChild(headers[index]);
         headers[index].onclick = (function (curHeader) { return function () { expandAccordion(curHeader); } })(curHeader);
 
-        if(headers[index].id.startsWith(autoOpenIndex)) {
+        if(headers[index].id.startsWith(autoOpenContent)) {
             var headerToExpand = headers[index];
             (function(headerToExpand){
                 setTimeout(function(){
@@ -207,12 +223,12 @@ function removeContent(type, name, contentDict) {
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){getContent(type)}, 3000);
+        setTimeout(function(){removeContent(type, name, contentDict)}, 3000);
     }
 
     request.onerror = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){getContent(type)}, 3000);
+        setTimeout(function(){removeContent(type, name, contentDict)}, 3000);
     }
 
     request.onreadystatechange = () => {
@@ -242,19 +258,19 @@ function updateContent(type, name, contentDict) {
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){getContent(type)}, 3000);
+        setTimeout(function(){updateContent(type, name, contentDict)}, 3000);
     }
 
     request.onerror = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){getContent(type)}, 3000);
+        setTimeout(function(){updateContent(type, name, contentDict)}, 3000);
     }
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
             if(request.responseText.startsWith("ERROR")){
                 alert(request.responseText);
             } else if(request.responseText.startsWith("Success")) {
-                autoOpenIndex = name;
+                autoOpenContent = name;
                 getContent(type);
             }
         } else {
@@ -277,12 +293,12 @@ function addContent(type, name, contentDict) {
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){request.send(JSON.stringify(contentDict["NewValue"]))}, 3000);
+        setTimeout(function(){addContent(type, name, contentDict)}, 3000);
     }
 
     request.onerror = () => {
         display.innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){request.send(JSON.stringify(contentDict["NewValue"]))}, 3000);
+        setTimeout(function(){addContent(type, name, contentDict)}, 3000);
     }
 
     request.onreadystatechange = () => {
@@ -290,7 +306,7 @@ function addContent(type, name, contentDict) {
             if(request.responseText.startsWith("ERROR")){
                 alert(request.responseText);
             } else if(request.responseText.startsWith("Success")) {
-                autoOpenIndex = contentDict["NewValue"]["_Name"];
+                autoOpenContent = contentDict["NewValue"]["_Name"];
                 getContent(type);
             }
         } else {
@@ -304,6 +320,45 @@ function addContent(type, name, contentDict) {
     request.setRequestHeader("Type", type);
     request.setRequestHeader("User", userInformation["id"]);
     request.send(JSON.stringify(contentDict["NewValue"]));
+}
+
+function filterGuilds(){
+    var guilds = sessionStorage.getItem('guilds');
+    var display = document.getElementById('serverList');
+    display.innerHTML = "<img src='https://avanaartsdistrict.com/views/site/images/icons/loading.gif' style='width: 50px;height: 50px; top: 50%;'/>"
+    var request = new XMLHttpRequest();
+    request.timeout = 5000;
+
+    request.ontimeout = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){filterGuilds()}, 3000);
+    }
+
+    request.onerror = () => {
+        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function(){filterGuilds()}, 3000);
+    }
+
+    request.onreadystatechange = () => {
+        if (request.status >= 200 && request.status < 400) {
+            console.log(sessionStorage.getItem('guilds'));
+            var guilds = JSON.parse(sessionStorage.getItem('guilds'));
+            content = JSON.parse(request.responseText);
+
+            for(var i = guilds.length - 1; i >= 0; i--){
+                if(!(guilds[i]["id"] in content))
+                    guilds.splice(i, 1);
+            }
+
+            sessionStorage.setItem('guilds', JSON.stringify(guilds));
+            displayGuilds();
+        } else {
+            //alert(request.responseText);
+        }
+    }
+
+    request.open("GET", `http://5.45.104.29:5000/api/user/guilds/${JSON.parse(sessionStorage.getItem('user'))["id"]}`);
+    request.send();
 }
 
 function getValues(index, name) {

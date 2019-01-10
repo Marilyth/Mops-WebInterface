@@ -97,7 +97,6 @@ body, input, select, textarea { font-family: 'Noto Sans', sans-serif;}
     position: absolute;
     display: flex;
     flex-direction: column;
-    max-height: 70%;
     width: 60%;
     height: 70%;
     top: 40%;

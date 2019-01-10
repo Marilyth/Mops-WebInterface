@@ -35,7 +35,7 @@
           <div id='serverList' class='scroll-content' style='background-color: rgb(32, 34, 37); text-align: center;'></div>
         </td>
         <td style='width: 23%; height: 100%;'>
-          <div id="optionListHeader" style='background-color: rgb(47, 49, 54); text-align: left;'></div>
+          <div id="optionListHeader" style='background-color: rgb(47, 49, 54); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'></div>
           <div id="optionList" class='scroll-content' style='background-color: rgb(47, 49, 54); text-align: center;'></div>
         </td>
         <td style='width: 70%; height: 100%;'>
@@ -64,13 +64,13 @@
     list2.style.height = window.innerHeight * 0.7 - 52 + "px";
     list2b.style.width = window.innerWidth * 0.6 * 0.21 + "px";
     list2b.style.height = "52px";
-    list3.style.width = window.innerWidth * 0.6 * 0.697 + "px";
-    list3.style.height = window.innerHeight * 0.697 - 52 + "px";
+    list3.style.width = window.innerWidth * 0.6 * 0.7 - 3 + "px";
+    list3.style.height = window.innerHeight * 0.7 - 53 + "px";
     list3b.style.width = window.innerWidth * 0.6 * 0.7 + "px";
     list3b.style.height = "52px";
     getToken();
     displayUser();
-    displayGuilds();
+    filterGuilds();
   </script>
   </div>
 </body>
