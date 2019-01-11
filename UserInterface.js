@@ -18,7 +18,7 @@ function displayGuilds() {
     inviteButton.style = `text-align: center !important; width: 46px; height: 46px; border-bottom: 2px solid rgb(77, 77, 77);`;
     inviteButton.style.paddingTop = "4px";
     inviteButton.style.paddingBottom = "4px";
-    inviteButton.onclick = function(){window.open(`https://discordapp.com/api/oauth2/authorize?client_id=305398845389406209&permissions=271707136&redirect_uri=${sessionStorage.getItem(`REDIRECT_URI`)}&scope=bot`, '_blank').focus()};
+    inviteButton.onclick = function () { window.open(`https://discordapp.com/api/oauth2/authorize?client_id=305398845389406209&permissions=271707136&redirect_uri=${sessionStorage.getItem(`REDIRECT_URI`)}&scope=bot`, '_blank').focus() };
     var head = document.getElementById('serverListHeader');
     head.innerHTML = "";
     head.appendChild(inviteButton);
@@ -97,7 +97,7 @@ function displayOptions() {
             var commandName = options[category][index];
             commandButton.style.paddingLeft = '5px';
             (function (commandName) {
-                commandButton.onclick = function(event){
+                commandButton.onclick = function (event) {
                     autoOpenContent = "New";
                     getContent(commandName);
                     event.stopPropagation();
@@ -106,10 +106,10 @@ function displayOptions() {
             acHeader.appendChild(commandButton);
         }
 
-        if(acHeader.id.startsWith(autoOpenOption)) {
+        if (acHeader.id.startsWith(autoOpenOption)) {
             var headerToExpand = acHeader;
-            (function(headerToExpand){
-                setTimeout(function(){
+            (function (headerToExpand) {
+                setTimeout(function () {
                     expandAccordion(headerToExpand)
                 }, 30)
             })(headerToExpand);
@@ -138,19 +138,20 @@ function displayContent(option) {
     table.id = 'contentTable';
 
     var headers = makeInputTable(option);
-    headers.push(makeNewInput(option));
+    if(lastGuild['permissions'] & content["Permissions"] == content['Permissions'] || lastGuild['owner'])
+        headers.push(makeNewInput(option));
 
     for (var index in headers) {
         var curHeader = headers[index];
         table.insertRow(-1).insertCell(-1).appendChild(headers[index]);
         headers[index].onclick = (function (curHeader) { return function () { expandAccordion(curHeader); } })(curHeader);
 
-        if(headers[index].id.startsWith(autoOpenContent)) {
+        if (headers[index].id.startsWith(autoOpenContent)) {
             var headerToExpand = headers[index];
-            (function(headerToExpand){
-                setTimeout(function(){
+            (function (headerToExpand) {
+                setTimeout(function () {
                     headerToExpand.style.backgroundColor = "rgb(80,83,89)";
-                    setTimeout(function(){headerToExpand.style.backgroundColor = "rgb(72,75,81)"}, 200);
+                    setTimeout(function () { headerToExpand.style.backgroundColor = "rgb(72,75,81)" }, 200);
                     expandAccordion(headerToExpand)
                 }, 30)
             })(headerToExpand);
@@ -180,7 +181,7 @@ function getChannels() {
 
 function getOptions() {
     var optionsDict = {};
-    optionsDict['Trackers'] = ["OsuTracker", "TwitchTracker", "TwitterTracker", "YoutubeTracker", "YoutubeLiveTracker", "RedditTracker", "HTMLTracker", "WoWTracker", "OSRSTracker", "TwitchClipTracker", "NewsTracker", "OverwatchTracker"];
+    optionsDict['Trackers'] = ["OsuTracker", "TwitchTracker", "TwitterTracker", "YoutubeTracker", "YoutubeLiveTracker", "RedditTracker", "HTMLTracker", "OSRSTracker", "TwitchClipTracker", "NewsTracker", "OverwatchTracker"];
     //optionsDict['Information'] = ["GetStats"];
     //optionsDict['Moderation'] = ["Poll", "RoleInvite", "Giveaway"];
 
@@ -196,12 +197,12 @@ function getContent(type) {
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){getContent(type)}, 3000);
+        setTimeout(function () { getContent(type) }, 3000);
     }
 
     request.onerror = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){getContent(type)}, 3000);
+        setTimeout(function () { getContent(type) }, 3000);
     }
 
     request.onreadystatechange = () => {
@@ -212,7 +213,7 @@ function getContent(type) {
             //alert(request.responseText);
         }
     }
-    request.open("GET", `http://5.45.104.29:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
+    request.open("GET", `http://localhost:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
     request.send();
 }
 
@@ -222,20 +223,20 @@ function removeContent(type, name, contentDict) {
     request.timeout = 5000;
 
     request.ontimeout = () => {
-        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){removeContent(type, name, contentDict)}, 3000);
+        document.getElementById('contentList').innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function () { removeContent(type, name, contentDict) }, 3000);
     }
 
     request.onerror = () => {
-        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){removeContent(type, name, contentDict)}, 3000);
+        document.getElementById('contentList').innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function () { removeContent(type, name, contentDict) }, 3000);
     }
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
-            if(request.responseText.startsWith("ERROR")){
+            if (request.responseText.startsWith("ERROR")) {
                 alert(request.responseText);
-            } else if(request.responseText.startsWith("Success")) {
+            } else if (request.responseText.startsWith("Success")) {
                 getContent(type);
             }
         } else {
@@ -243,8 +244,8 @@ function removeContent(type, name, contentDict) {
         }
     }
     console.log(type);
-    
-    request.open("POST", `http://5.45.104.29:5000/api/content/remove`);
+
+    request.open("POST", `http://localhost:5000/api/content/remove`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     request.setRequestHeader("Type", type);
     request.setRequestHeader("User", userInformation["id"]);
@@ -257,19 +258,19 @@ function updateContent(type, name, contentDict) {
     request.timeout = 5000;
 
     request.ontimeout = () => {
-        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){updateContent(type, name, contentDict)}, 3000);
+        document.getElementById('contentList').innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function () { updateContent(type, name, contentDict) }, 3000);
     }
 
     request.onerror = () => {
-        display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){updateContent(type, name, contentDict)}, 3000);
+        document.getElementById('contentList').innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function () { updateContent(type, name, contentDict) }, 3000);
     }
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
-            if(request.responseText.startsWith("ERROR")){
+            if (request.responseText.startsWith("ERROR")) {
                 alert(request.responseText);
-            } else if(request.responseText.startsWith("Success")) {
+            } else if (request.responseText.startsWith("Success")) {
                 autoOpenContent = name;
                 getContent(type);
             }
@@ -278,8 +279,8 @@ function updateContent(type, name, contentDict) {
         }
     }
     console.log(contentDict);
-    
-    request.open("POST", `http://5.45.104.29:5000/api/content/update`);
+
+    request.open("POST", `http://localhost:5000/api/content/update`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     request.setRequestHeader("Type", type);
     request.setRequestHeader("User", userInformation["id"]);
@@ -292,20 +293,20 @@ function addContent(type, name, contentDict) {
     request.timeout = 5000;
 
     request.ontimeout = () => {
-        display.innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){addContent(type, name, contentDict)}, 3000);
+        document.getElementById('contentList').innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function () { addContent(type, name, contentDict) }, 3000);
     }
 
     request.onerror = () => {
-        display.innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){addContent(type, name, contentDict)}, 3000);
+        document.getElementById('contentList').innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
+        setTimeout(function () { addContent(type, name, contentDict) }, 3000);
     }
 
     request.onreadystatechange = () => {
         if (request.status >= 200 && request.status < 400) {
-            if(request.responseText.startsWith("ERROR")){
+            if (request.responseText.startsWith("ERROR")) {
                 alert(request.responseText);
-            } else if(request.responseText.startsWith("Success")) {
+            } else if (request.responseText.startsWith("Success")) {
                 autoOpenContent = contentDict["NewValue"]["_Name"];
                 getContent(type);
             }
@@ -314,15 +315,15 @@ function addContent(type, name, contentDict) {
         }
     }
     console.log(type);
-    
-    request.open("POST", `http://5.45.104.29:5000/api/content/add`);
+
+    request.open("POST", `http://localhost:5000/api/content/add`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     request.setRequestHeader("Type", type);
     request.setRequestHeader("User", userInformation["id"]);
     request.send(JSON.stringify(contentDict["NewValue"]));
 }
 
-function filterGuilds(){
+function filterGuilds() {
     var guilds = sessionStorage.getItem('guilds');
     var display = document.getElementById('serverList');
     display.innerHTML = "<img src='https://avanaartsdistrict.com/views/site/images/icons/loading.gif' style='width: 50px;height: 50px; top: 50%;'/>"
@@ -331,12 +332,12 @@ function filterGuilds(){
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){filterGuilds()}, 3000);
+        setTimeout(function () { filterGuilds() }, 3000);
     }
 
     request.onerror = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
-        setTimeout(function(){filterGuilds()}, 3000);
+        setTimeout(function () { filterGuilds() }, 3000);
     }
 
     request.onreadystatechange = () => {
@@ -345,8 +346,8 @@ function filterGuilds(){
             var guilds = JSON.parse(sessionStorage.getItem('guilds'));
             content = JSON.parse(request.responseText);
 
-            for(var i = guilds.length - 1; i >= 0; i--){
-                if(!(guilds[i]["id"] in content))
+            for (var i = guilds.length - 1; i >= 0; i--) {
+                if (!(guilds[i]["id"] in content))
                     guilds.splice(i, 1);
             }
 
@@ -357,15 +358,15 @@ function filterGuilds(){
         }
     }
 
-    request.open("GET", `http://5.45.104.29:5000/api/user/guilds/${JSON.parse(sessionStorage.getItem('user'))["id"]}`);
+    request.open("GET", `http://localhost:5000/api/user/guilds/${JSON.parse(sessionStorage.getItem('user'))["id"]}`);
     request.send();
 }
 
 function getValues(index, name) {
-    dict = {"NewValue": {}, "OldValue": content["Content"][index]};
+    dict = { "NewValue": {}, "OldValue": content["Content"][index] };
     dict["NewValue"]["_Name"] = name;
     for (entry in content["Parameters"]) {
-        if(entry.startsWith("_") && name != "New") continue;
+        if (entry.startsWith("_") && name != "New") continue;
         var curValue = document.getElementById(name + entry).value;
         dict["NewValue"][entry] = curValue;
     }
@@ -381,6 +382,14 @@ function makeInputTable(option) {
         acHeader.classList = 'accordion';
         acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
         acHeader.style.width = window.innerWidth * 0.6 * 0.7 + "px";
+
+        var iterator = 1;
+        for (var i = 0; i < headers.length; i++)
+            if (headers[i].id == content['Content'][curContent]['_Name'] + 'AccordionHeader')
+                iterator++;
+
+        if (iterator != 1) content['Content'][curContent]['_Name'] = content['Content'][curContent]['_Name'] + iterator;
+
         acHeader.id = content['Content'][curContent]['_Name'] + 'AccordionHeader';
         acHeader.innerText = content['Content'][curContent]['_Name'];
 
@@ -388,7 +397,7 @@ function makeInputTable(option) {
         innerTable.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%; text-align: left; color: rgb(246, 246, 247);";
 
         for (var parameter in content['Parameters']) {
-            if(parameter.startsWith("_")) continue;
+            if (parameter.startsWith("_")) continue;
             var input;
             var description = document.createElement('div');
             var row = innerTable.insertRow(-1);
@@ -405,10 +414,10 @@ function makeInputTable(option) {
                     var optionValue = document.createElement('option');
                     optionValue.text = content["Parameters"][parameter][optionIndex];
                     optionValue.value = content["Parameters"][parameter][optionIndex];
-                    if(content["Parameters"][parameter][optionIndex] == content['Content'][curContent][parameter]){
+                    if (content["Parameters"][parameter][optionIndex] == content['Content'][curContent][parameter]) {
                         optionValue.selected = true;
                     }
-                    
+
                     input.appendChild(optionValue);
                 }
             } else {
@@ -434,24 +443,28 @@ function makeInputTable(option) {
             cellB.addEventListener('click', (event) => { event.stopPropagation(); });
         }
 
+        var hasPermission = lastGuild['permissions'] & content["Permissions"] == content['Permissions'] || lastGuild['owner'];
+
         var update = document.createElement('button');
         update.className = 'invite-button';
         update.innerText = 'Update';
-        update.style.color = 'rgb(67, 181, 129)';
+        update.style.color = hasPermission ? 'rgb(67, 181, 129)' : 'rgb(114, 118, 125)';
         update.style.background = 'rgb(72,75,81)';
-        update.style.border = '2px solid rgb(67, 181, 129)';
+        update.disabled = !hasPermission;
+        update.style.border = hasPermission ? '2px solid rgb(67, 181, 129)' : '2px solid rgb(114, 118, 125)';
         update.style.width = '100%';
         var curName = content['Content'][curContent]['_Name'];
-        (function(curName, curContent){update.onclick = function(event){updateContent(option, curName, getValues(curContent, curName)); event.stopPropagation();}})(curName, curContent);
+        (function (curName, curContent) { update.onclick = function (event) { updateContent(option, curName, getValues(curContent, curName)); event.stopPropagation(); } })(curName, curContent);
 
         var remove = document.createElement('button');
         remove.className = 'invite-button';
         remove.innerText = 'Remove';
-        remove.style.color = 'rgb(212, 56, 56)';
+        remove.style.color = hasPermission ? 'rgb(212, 56, 56)' : 'rgb(114, 118, 125)';
+        remove.disabled = !hasPermission;
         remove.style.background = 'rgb(72,75,81)';
-        remove.style.border = '2px solid rgb(212, 56, 56)';
+        remove.style.border = hasPermission ? '2px solid rgb(212, 56, 56)' : '2px solid rgb(114, 118, 125)';
         remove.style.width = '25%';
-        (function(curName, curContent){remove.addEventListener('click', (event) => {removeContent(option, curName, getValues(curContent, curName)); event.stopPropagation();})})(curName, curContent);
+        (function (curName, curContent) { remove.addEventListener('click', (event) => { removeContent(option, curName, getValues(curContent, curName)); event.stopPropagation(); }) })(curName, curContent);
 
         var row = innerTable.insertRow(-1);
         var cellA = row.insertCell(-1);
@@ -515,7 +528,7 @@ function makeNewInput(option) {
         input.style.borderBottom = '1px solid rgb(54, 57, 63)';
         input.style.outline = 'none';
         input.onclick = function (event) { event.stopPropagation(); };
-        if(input.childElementCount > 0) input.firstChild.selected = true;
+        if (input.childElementCount > 0) input.firstChild.selected = true;
 
         cellA.style.width = '20%';
         cellA.appendChild(description);
@@ -536,9 +549,10 @@ function makeNewInput(option) {
     add.style.width = '100%';
     add.style.alignSelf = 'center';
     add.onclick = function (event) { addContent(option, 'New', getValues(content['Parameters'], 'New')); event.stopPropagation(); };
-    div.appendChild(add);
 
+    div.appendChild(add);
     acHeader.appendChild(div);
+
     acHeader.onclick = (function (acHeader) { return function () { expandAccordion(acHeader); } })(acHeader);
 
     return acHeader;
