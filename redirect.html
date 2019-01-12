@@ -1,27 +1,78 @@
 <!DOCTYPE HTML>
 <html>
 
-  <head>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+  <title>MopsBot</title>
 
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MopsBot</title>
+</head>
 
-  </head>
+<body>
+  <div class='topContainer'>
+    <table style='float:right;'>
+      <tr>
+        <td>
+            <div id="topIcon"></div>
+        </td>
+        <td>
+            <div id="username"></div>
+        </td>
+      </tr>
+    </table>
 
-  <body>
+  </div>
 
-        <table border="1" id="parameters">
-        </table>
-        <script src="./Authentification.js"></script>
-        <script>
-            getToken();
-        </script>
-        <button type="button" onclick="refreshToken()"> Refresh </button>
-        <button type="button" onclick="getUser()"> Fetch User Information </button>
-        <button type="button" onclick="getGuilds()"> Fetch Users Guilds </button>
+  <div class="centralContainer" id="Container">
 
-  </body>
+    <script src="./Authentification.js"></script>
+    <script src="./UserInterface.js"></script>
+
+    <table id='containerTable' border="0" cellspacing="0" cellpadding="0" align="left" style="height:100%;padding:0px;margin:0px;border:0px;vertical-align: top; width: 100%;">
+      <tr>
+        <td style='width:7%; height: 100%;'>
+          <div id="serverListHeader" style='background-color: rgb(32, 34, 37); text-align: center;'></div>
+          <div id='serverList' class='scroll-content' style='background-color: rgb(32, 34, 37); text-align: center;'></div>
+        </td>
+        <td style='width: 23%; height: 100%;'>
+          <div id="optionListHeader" style='background-color: rgb(47, 49, 54); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'></div>
+          <div id="optionList" class='scroll-content' style='background-color: rgb(47, 49, 54); text-align: center;'></div>
+        </td>
+        <td style='width: 70%; height: 100%;'>
+          <div id="contentListHeader" style='text-align: center;'></div>
+          <div id="contentList" class='scroll-content' style='text-align: center;'></div>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+  <script>
+    var container = document.getElementById("Container");
+    var list1 = document.getElementById("serverList");
+    var list1b = document.getElementById("serverListHeader");
+    var list2 = document.getElementById("optionList");
+    var list2b = document.getElementById("optionListHeader");
+    var list3 = document.getElementById("contentList");
+    var list3b = document.getElementById("contentListHeader");
+    container.style.width = window.innerWidth * 0.6 + "px";
+    container.style.height = window.innerHeight * 0.7 + "px";
+    list1.style.width = window.innerWidth * 0.6 * 0.09 + "px";
+    list1.style.height = window.innerHeight * 0.7 - 56 + "px";
+    list1b.style.width = window.innerWidth * 0.6 * 0.09 + "px";
+    list1b.style.height = "56px";
+    list2.style.width = window.innerWidth * 0.6 * 0.21 + "px";
+    list2.style.height = window.innerHeight * 0.7 - 52 + "px";
+    list2b.style.width = window.innerWidth * 0.6 * 0.21 + "px";
+    list2b.style.height = "52px";
+    list3.style.width = window.innerWidth * 0.6 * 0.7 - 3 + "px";
+    list3.style.height = window.innerHeight * 0.7 - 53 + "px";
+    list3b.style.width = window.innerWidth * 0.6 * 0.7 + "px";
+    list3b.style.height = "52px";
+    getToken();
+    displayUser();
+    filterGuilds();
+  </script>
+  </div>
+</body>
 
 </html>
