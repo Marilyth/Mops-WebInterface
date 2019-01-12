@@ -138,7 +138,7 @@ function displayContent(option) {
     table.id = 'contentTable';
 
     var headers = makeInputTable(option);
-    if(lastGuild['permissions'] & content["Permissions"] == content['Permissions'] || lastGuild['owner'])
+    if((lastGuild['permissions'] & content["Permissions"]) == content['Permissions'] || lastGuild['owner'])
         headers.push(makeNewInput(option));
 
     for (var index in headers) {
@@ -213,7 +213,7 @@ function getContent(type) {
             //alert(request.responseText);
         }
     }
-    request.open("GET", `http://localhost:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
+    request.open("GET", `http://5.45.104.29:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
     request.send();
 }
 
@@ -245,10 +245,10 @@ function removeContent(type, name, contentDict) {
     }
     console.log(type);
 
-    request.open("POST", `http://localhost:5000/api/content/remove`);
+    request.open("POST", `http://5.45.104.29:5000/api/content/remove`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     request.setRequestHeader("Type", type);
-    request.setRequestHeader("User", userInformation["id"]);
+    request.setRequestHeader("Token", JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]);
     request.send(JSON.stringify(contentDict["OldValue"]));
 }
 
@@ -280,17 +280,17 @@ function updateContent(type, name, contentDict) {
     }
     console.log(contentDict);
 
-    request.open("POST", `http://localhost:5000/api/content/update`);
+    request.open("POST", `http://5.45.104.29:5000/api/content/update`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     request.setRequestHeader("Type", type);
-    request.setRequestHeader("User", userInformation["id"]);
+    request.setRequestHeader("Token", JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]);
     request.send(JSON.stringify(contentDict));
 }
 
 function addContent(type, name, contentDict) {
     var request = new XMLHttpRequest();
 
-    request.timeout = 5000;
+    request.timeout = 20000;
 
     request.ontimeout = () => {
         document.getElementById('contentList').innerHTML = "<img src='https://png.pngtree.com/svg/20170713/login_timeout_306996.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
@@ -316,10 +316,10 @@ function addContent(type, name, contentDict) {
     }
     console.log(type);
 
-    request.open("POST", `http://localhost:5000/api/content/add`);
+    request.open("POST", `http://5.45.104.29:5000/api/content/add`);
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
     request.setRequestHeader("Type", type);
-    request.setRequestHeader("User", userInformation["id"]);
+    request.setRequestHeader("Token", JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]);
     request.send(JSON.stringify(contentDict["NewValue"]));
 }
 
@@ -358,7 +358,7 @@ function filterGuilds() {
         }
     }
 
-    request.open("GET", `http://localhost:5000/api/user/guilds/${JSON.parse(sessionStorage.getItem('user'))["id"]}`);
+    request.open("GET", `http://5.45.104.29:5000/api/user/guilds/${JSON.parse(sessionStorage.getItem('user'))["id"]}`);
     request.send();
 }
 
@@ -443,7 +443,7 @@ function makeInputTable(option) {
             cellB.addEventListener('click', (event) => { event.stopPropagation(); });
         }
 
-        var hasPermission = lastGuild['permissions'] & content["Permissions"] == content['Permissions'] || lastGuild['owner'];
+        var hasPermission = (lastGuild['permissions'] & content["Permissions"]) == content['Permissions'] || lastGuild['owner'];
 
         var update = document.createElement('button');
         update.className = 'invite-button';
