@@ -206,7 +206,7 @@ function getContent(type) {
     }
 
     request.onreadystatechange = () => {
-        if (request.status >= 200 && request.status < 400) {
+        if (request.readyState == 4 && request.status >= 200 && request.status < 400) {
             content = JSON.parse(request.responseText);
             displayContent(type);
         } else {
@@ -234,7 +234,7 @@ function removeContent(type, name, contentDict) {
     }
 
     request.onreadystatechange = () => {
-        if (request.status >= 200 && request.status < 400) {
+        if (request.readyState == 4 && request.status >= 200 && request.status < 400) {
             if (request.responseText.startsWith("ERROR")) {
                 alert(request.responseText);
             } else if (request.responseText.startsWith("Success")) {
@@ -268,7 +268,7 @@ function updateContent(type, name, contentDict) {
         setTimeout(function () { updateContent(type, name, contentDict) }, 3000);
     }
     request.onreadystatechange = () => {
-        if (request.status >= 200 && request.status < 400) {
+        if (request.readyState == 4 && request.status >= 200 && request.status < 400) {
             if (request.responseText.startsWith("ERROR")) {
                 alert(request.responseText);
             } else if (request.responseText.startsWith("Success")) {
@@ -304,7 +304,7 @@ function addContent(type, name, contentDict) {
     }
 
     request.onreadystatechange = () => {
-        if (request.status >= 200 && request.status < 400) {
+        if (request.readyState == 4 && request.status >= 200 && request.status < 400) {
             if (request.responseText.startsWith("ERROR")) {
                 alert(request.responseText);
             } else if (request.responseText.startsWith("Success")) {
@@ -342,7 +342,7 @@ function filterGuilds() {
     }
 
     request.onreadystatechange = () => {
-        if (request.status >= 200 && request.status < 400) {
+        if (request.readyState == 4 && request.status >= 200 && request.status < 400) {
             console.log(sessionStorage.getItem('guilds'));
             var guilds = JSON.parse(sessionStorage.getItem('guilds'));
             content = JSON.parse(request.responseText);
