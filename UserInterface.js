@@ -5,7 +5,7 @@ var content = {};
 
 function displayUser() {
     var userInformation = JSON.parse(sessionStorage.getItem('user'));
-    document.getElementById("topIcon").innerHTML = `<img class="roundSquare" id="icon" style='width: 50px; height: 50px;' src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp">`;
+    document.getElementById("topIcon").innerHTML = `<img class="roundSquare" id="icon" style='width: 46px; height: 46px;' src="https://cdn.discordapp.com/avatars/${userInformation["id"]}/${userInformation["avatar"]}.webp">`;
     document.getElementById('username').innerHTML = userInformation['username'];
 }
 
@@ -181,9 +181,9 @@ function getChannels() {
 
 function getOptions() {
     var optionsDict = {};
-    optionsDict['Trackers'] = ["OsuTracker", "TwitchTracker", "TwitterTracker", "YoutubeTracker", "YoutubeLiveTracker", "RedditTracker", "HTMLTracker", "OSRSTracker", "TwitchClipTracker", "NewsTracker", "OverwatchTracker"];
+    optionsDict['Trackers'] = ["OsuTracker", "TwitchTracker", "TwitterTracker", "YoutubeTracker", "YoutubeLiveTracker", "RedditTracker", "HTMLTracker", "OSRSTracker", "TwitchClipTracker", "NewsTracker", "RSSTracker", "OverwatchTracker"];
     //optionsDict['Information'] = ["GetStats"];
-    //optionsDict['Moderation'] = ["Poll", "RoleInvite", "Giveaway"];
+    //optionsDict['Moderation'] = ["Giveaway"];
 
     return optionsDict;
 }
@@ -193,7 +193,7 @@ function getContent(type) {
     var display = document.getElementById('contentList');
     display.innerHTML = "<img src='https://avanaartsdistrict.com/views/site/images/icons/loading.gif' style='width: 50px;height: 50px; top: 50%;'/>"
     var request = new XMLHttpRequest();
-    request.timeout = 5000;
+    request.timeout = 10000;
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
@@ -214,13 +214,14 @@ function getContent(type) {
         }
     }
     request.open("GET", `http://5.45.104.29:5000/api/content?guild=${lastGuild['id']}&type=${type}`);
+    request.setRequestHeader("Token", JSON.parse(sessionStorage.getItem('TokenInformation'))["access_token"]);
     request.send();
 }
 
 function removeContent(type, name, contentDict) {
     var request = new XMLHttpRequest();
 
-    request.timeout = 5000;
+    request.timeout = 10000;
 
     request.ontimeout = () => {
         document.getElementById('contentList').innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
@@ -255,7 +256,7 @@ function removeContent(type, name, contentDict) {
 function updateContent(type, name, contentDict) {
     var request = new XMLHttpRequest();
 
-    request.timeout = 5000;
+    request.timeout = 10000;
 
     request.ontimeout = () => {
         document.getElementById('contentList').innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
