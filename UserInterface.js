@@ -181,7 +181,7 @@ function getChannels() {
 
 function getOptions() {
     var optionsDict = {};
-    optionsDict['Trackers'] = ["OsuTracker", "TwitchTracker", "TwitterTracker", "YoutubeTracker", "YoutubeLiveTracker", "RedditTracker", "HTMLTracker", "OSRSTracker", "TwitchClipTracker", "NewsTracker", "RSSTracker", "OverwatchTracker"];
+    optionsDict['Trackers'] = ["OsuTracker", "TwitchTracker", "TwitterTracker", "YoutubeTracker", "YoutubeLiveTracker", "RedditTracker", "HTMLTracker", "OSRSTracker", "TwitchClipTracker", "JSONTracker", "RSSTracker", "OverwatchTracker"];
     //optionsDict['Information'] = ["GetStats"];
     //optionsDict['Moderation'] = ["Giveaway"];
 
@@ -329,7 +329,7 @@ function filterGuilds() {
     var display = document.getElementById('serverList');
     display.innerHTML = "<img src='https://avanaartsdistrict.com/views/site/images/icons/loading.gif' style='width: 50px;height: 50px; top: 50%;'/>"
     var request = new XMLHttpRequest();
-    request.timeout = 5000;
+    request.timeout = 10000;
 
     request.ontimeout = () => {
         display.innerHTML = "<img src='./css/timeout.png' style='width: 50px;height: 50px; top: 50%;'/><br>Mops didn't answer, perhaps he is offline?<br>Trying again in a few seconds.";
