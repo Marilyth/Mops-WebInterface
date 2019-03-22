@@ -139,7 +139,9 @@ function displayContent(option) {
 
     var headers = makeInputTable(option);
     if((lastGuild['permissions'] & content["Permissions"]) == content['Permissions'] || lastGuild['owner'])
-        headers.push(makeNewInput(option));
+        headers.push(makeNewInput(option, true));
+    else
+        headers.push(makeNewInput(option, false));
 
     for (var index in headers) {
         var curHeader = headers[index];
@@ -483,12 +485,16 @@ function makeInputTable(option) {
     return headers;
 }
 
-function makeNewInput(option) {
+function makeNewInput(option, hasPermission = true) {
     var acHeader = document.createElement('div');
     acHeader.classList = 'accordion';
     acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important;';
     acHeader.id = 'NewAccordionHeader';
-    acHeader.innerText = '+New+';
+    acHeader.innerText = hasPermission ? '+New+' : "No permission to add tracker!";
+    if(!hasPermission){
+        acHeader.style.color = "rgb(212, 56, 56)";
+        return acHeader;
+    }
 
     var innerTable = document.createElement('table');
     innerTable.style = "border-collapse: collapse; border-spacing: 3px 3px; width: 100%; text-align: left; color: rgb(246, 246, 247);";
