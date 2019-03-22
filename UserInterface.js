@@ -494,6 +494,8 @@ function makeNewInput(option, hasPermission = true) {
     if(!hasPermission){
         acHeader.style.color = "rgb(212, 56, 56)";
         return acHeader;
+    } else {
+        acHeader.style.color = "rgb(67, 181, 129)";
     }
 
     var innerTable = document.createElement('table');
