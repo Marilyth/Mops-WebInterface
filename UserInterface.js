@@ -490,7 +490,7 @@ function makeNewInput(option, hasPermission = true) {
     acHeader.classList = 'accordion';
     acHeader.style = 'text-align: center !important; background: rgb(72,75,81) !important;';
     acHeader.id = 'NewAccordionHeader';
-    acHeader.innerText = hasPermission ? '+New+' : "No permission to add tracker!";
+    acHeader.innerText = hasPermission ? 'Add Tracker' : "No permission to add tracker!";
     if(!hasPermission){
         acHeader.style.color = "rgb(212, 56, 56)";
         return acHeader;
